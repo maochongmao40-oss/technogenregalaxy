@@ -51,6 +51,7 @@ canvas {
   color: #f4f7fb;
   background: rgba(255, 255, 255, 0.06);
   cursor: pointer;
+  overflow-wrap: anywhere;
 }
 
 .layer-controls .is-active {
@@ -69,6 +70,7 @@ canvas {
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(3, 3, 7, 0.68);
   backdrop-filter: blur(18px);
+  overflow-wrap: anywhere;
 }
 
 .genre-panel h1,
@@ -138,6 +140,7 @@ canvas {
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(3, 3, 7, 0.72);
   backdrop-filter: blur(16px);
+  overflow-wrap: anywhere;
 }
 
 .audio-player div {
