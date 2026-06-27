@@ -10,6 +10,10 @@ describe('GenrePanel', () => {
     render(<GenrePanel genre={getGenreById('detroit-techno')} dispatch={dispatch} />);
 
     expect(screen.getByRole('heading', { name: 'Detroit Techno' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /classic strings of life/i })).toBeDisabled();
+    expect(screen.getByText(/embed: spotify/i)).toBeInTheDocument();
+    expect(screen.getByText(/free audio: internet archive/i)).toBeInTheDocument();
+
     await userEvent.click(screen.getAllByRole('button', { name: /play/i })[0]);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'startTrack' }));
     expect(screen.getByRole('button', { name: /reserved/i })).toBeDisabled();

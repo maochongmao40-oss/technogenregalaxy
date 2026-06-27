@@ -39,21 +39,30 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
         <h2>Signals</h2>
         <div className="track-list">
           {tracks.map((track) => {
+            const playable = track.playbackStatus === 'ready';
             const reserved = track.playbackStatus === 'reserved';
+            const platformOptions = track.playbackOptions?.filter((option) => option.group === 'platform-embed') ?? [];
+            const freeOptions = track.playbackOptions?.filter((option) => option.group === 'free-audio') ?? [];
             return (
               <button
                 key={track.id}
                 type="button"
-                className="track-button"
-                disabled={reserved}
+                className={`track-button${track.canonical ? ' is-canonical' : ''}`}
+                disabled={!playable}
                 onClick={() => {
-                  if (!reserved) dispatch({ type: 'startTrack', trackId: track.id });
+                  if (playable) dispatch({ type: 'startTrack', trackId: track.id });
                 }}
               >
-                <span>{reserved ? 'Reserved ' : 'Play '}{track.title}</span>
+                <span>{track.canonical ? 'Classic ' : reserved ? 'Reserved ' : 'Play '}{track.title}</span>
                 <small>
                   {track.artist} / {track.duration} / {track.sourceKind}
                 </small>
+                {track.canonical ? (
+                  <span className="playback-options">
+                    <span>Embed: {platformOptions.map((option) => option.label.replace(' embed', '')).join(', ')}</span>
+                    <span>Free audio: {freeOptions.map((option) => option.label.replace(' search', '')).join(', ')}</span>
+                  </span>
+                ) : null}
               </button>
             );
           })}

@@ -3,8 +3,16 @@ export type RelationshipViewType = 'all' | RelationshipLayerType;
 
 export type GenreId = string;
 export type TrackId = string;
-export type TrackPlaybackStatus = 'ready' | 'reserved';
-export type TrackSourceKind = 'placeholder' | 'local-file' | 'external-url';
+export type TrackPlaybackStatus = 'ready' | 'reserved' | 'metadata-only';
+export type TrackSourceKind = 'placeholder' | 'local-file' | 'external-url' | 'curated-reference';
+export type PlaybackOptionGroup = 'platform-embed' | 'free-audio';
+export type PlaybackProvider =
+  | 'spotify'
+  | 'apple-music'
+  | 'soundcloud'
+  | 'youtube'
+  | 'internet-archive'
+  | 'jamendo';
 
 export type Vector3Tuple = [number, number, number];
 
@@ -32,7 +40,17 @@ export interface Track {
   audioSrc: string;
   sourceKind: TrackSourceKind;
   playbackStatus: TrackPlaybackStatus;
+  canonical?: boolean;
+  playbackOptions?: PlaybackOption[];
   note: string;
+}
+
+export interface PlaybackOption {
+  group: PlaybackOptionGroup;
+  provider: PlaybackProvider;
+  label: string;
+  status: 'candidate' | 'pending-url' | 'available';
+  url?: string;
 }
 
 export interface Genre {

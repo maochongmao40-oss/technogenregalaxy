@@ -24,6 +24,15 @@ const reservedTrack: Track = {
   playbackStatus: 'reserved',
 };
 
+const metadataTrack: Track = {
+  ...demoTrack,
+  id: 'metadata-demo',
+  audioSrc: '',
+  sourceKind: 'curated-reference',
+  playbackStatus: 'metadata-only',
+  canonical: true,
+};
+
 describe('useAudioPlayer', () => {
   beforeEach(() => {
     class MockAudio extends EventTarget {
@@ -58,5 +67,11 @@ describe('useAudioPlayer', () => {
     const { result } = renderHook(() => useAudioPlayer(reservedTrack, true));
     expect(result.current.canPlay).toBe(false);
     expect(result.current.error).toBe('Audio slot reserved');
+  });
+
+  it('keeps curated metadata-only classics unavailable until an embed or file is connected', () => {
+    const { result } = renderHook(() => useAudioPlayer(metadataTrack, true));
+    expect(result.current.canPlay).toBe(false);
+    expect(result.current.error).toBe('Playback source pending');
   });
 });

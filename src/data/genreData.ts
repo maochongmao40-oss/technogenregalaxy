@@ -426,7 +426,219 @@ export const genres: Genre[] = [
   },
 ];
 
+interface CanonicalTrackSeed {
+  title: string;
+  artist: string;
+  year: number;
+  note: string;
+}
+
+const canonicalTracksByGenre: Record<GenreId, CanonicalTrackSeed> = {
+  'detroit-techno': {
+    title: 'Strings of Life',
+    artist: 'Rhythim Is Rhythim',
+    year: 1987,
+    note: 'A central Detroit techno reference for machine soul, piano release, and futurist dance emotion.',
+  },
+  'minimal-techno': {
+    title: 'Minus',
+    artist: 'Robert Hood',
+    year: 1994,
+    note: 'A concise reference for stripped Detroit minimalism and reduced functional pressure.',
+  },
+  'dub-techno': {
+    title: 'M4',
+    artist: 'Maurizio',
+    year: 1995,
+    note: 'A canonical dub techno reference for chords, delay, and deep spatial repetition.',
+  },
+  'acid-techno': {
+    title: 'Acperience 1',
+    artist: 'Hardfloor',
+    year: 1992,
+    note: 'A key 303 reference that connects acid house energy to harder techno propulsion.',
+  },
+  'hard-techno': {
+    title: 'The Bells',
+    artist: 'Jeff Mills',
+    year: 1996,
+    note: 'A peak techno reference for pressure, repetition, and direct floor impact.',
+  },
+  'industrial-techno': {
+    title: 'Magneze',
+    artist: 'Surgeon',
+    year: 1994,
+    note: 'A metallic UK techno reference with austere loops and industrial pressure.',
+  },
+  schranz: {
+    title: 'Dandu Groove',
+    artist: 'Chris Liebing',
+    year: 2001,
+    note: 'A hard, compressed reference point for the faster German schranz lineage.',
+  },
+  'melodic-techno': {
+    title: 'Singularity',
+    artist: 'Stephan Bodzin',
+    year: 2015,
+    note: 'A modern melodic techno reference for cinematic arpeggios and long-form tension.',
+  },
+  'ambient-techno': {
+    title: 'Virtual',
+    artist: 'The Black Dog',
+    year: 1989,
+    note: 'A listening-techno reference where rhythm and atmosphere share the structure.',
+  },
+  electro: {
+    title: 'Planet Rock',
+    artist: 'Afrika Bambaataa & The Soulsonic Force',
+    year: 1982,
+    note: 'A foundational electro reference for machine funk, vocoder energy, and breakbeat futurism.',
+  },
+  'chicago-house': {
+    title: 'Your Love',
+    artist: 'Frankie Knuckles',
+    year: 1987,
+    note: 'A classic Chicago house reference for warehouse warmth and direct emotional groove.',
+  },
+  'acid-house': {
+    title: 'Acid Tracks',
+    artist: 'Phuture',
+    year: 1987,
+    note: 'A defining acid house record built around the TB-303 as a club signal.',
+  },
+  'deep-house': {
+    title: 'Can You Feel It',
+    artist: 'Mr. Fingers',
+    year: 1986,
+    note: 'A deep house reference for warm chords, machine soul, and understated lift.',
+  },
+  ebm: {
+    title: 'Headhunter',
+    artist: 'Front 242',
+    year: 1988,
+    note: 'A central EBM reference for sequenced body rhythm and industrial club attitude.',
+  },
+  'new-beat': {
+    title: 'Flesh',
+    artist: 'A Split-Second',
+    year: 1986,
+    note: 'A key Belgian slow-body reference that fed the new beat tempo mutation.',
+  },
+  trance: {
+    title: 'Cafe Del Mar',
+    artist: 'Energy 52',
+    year: 1993,
+    note: 'A trance reference for long euphoric tension and melodic release.',
+  },
+  'goa-trance': {
+    title: 'Teleport',
+    artist: 'Man With No Name',
+    year: 1994,
+    note: 'A Goa trance reference for psychedelic lead motion and extended outdoor energy.',
+  },
+  'breakbeat-hardcore': {
+    title: 'Charly',
+    artist: 'The Prodigy',
+    year: 1991,
+    note: 'A UK rave reference for sampled breaks, stabs, speed, and cartoonish pressure.',
+  },
+  jungle: {
+    title: 'Inner City Life',
+    artist: 'Goldie',
+    year: 1994,
+    note: 'A jungle reference for breakbeat architecture, bass weight, and emotional scale.',
+  },
+  idm: {
+    title: 'Windowlicker',
+    artist: 'Aphex Twin',
+    year: 1999,
+    note: 'A late-1990s IDM reference for fractured programming, digital detail, and listening-club ambiguity.',
+  },
+  ambient: {
+    title: '1/1',
+    artist: 'Brian Eno',
+    year: 1978,
+    note: 'A core ambient reference for music as environment, duration, and spatial perception.',
+  },
+  'berlin-school': {
+    title: 'Phaedra',
+    artist: 'Tangerine Dream',
+    year: 1974,
+    note: 'A Berlin School reference for sequencer drift and long-form electronic motion.',
+  },
+  'uk-garage': {
+    title: 'Never Gonna Let You Go',
+    artist: 'Tina Moore',
+    year: 1997,
+    note: 'A UK garage reference for swing, vocal chop energy, and bassline elasticity.',
+  },
+  breaks: {
+    title: 'Da Antidote',
+    artist: 'Stanton Warriors',
+    year: 2001,
+    note: 'A breaks reference for syncopated club drive and early-2000s breakbeat pressure.',
+  },
+  microhouse: {
+    title: 'Beau Mot Plage',
+    artist: 'Isolee',
+    year: 1998,
+    note: 'A microhouse reference for reduced funk, tiny edits, and close-grained club detail.',
+  },
+  rominimal: {
+    title: 'Slagare',
+    artist: 'Rhadoo',
+    year: 2007,
+    note: 'A Romanian minimal reference for elastic phrasing, restraint, and long-form groove.',
+  },
+  'hypnotic-techno': {
+    title: 'Cassandra',
+    artist: 'Donato Dozzy',
+    year: 2015,
+    note: 'A hypnotic techno reference for deep looping pressure and textural trance.',
+  },
+  'peak-time-techno': {
+    title: 'Your Mind',
+    artist: 'Adam Beyer & Bart Skils',
+    year: 2018,
+    note: 'A modern peak-time reference for polished tension, vocal hook, and large-room techno force.',
+  },
+  hardgroove: {
+    title: 'Manipulated',
+    artist: 'Ben Sims',
+    year: 2000,
+    note: 'A hardgroove reference for percussive funk and rolling techno propulsion.',
+  },
+  'birmingham-techno': {
+    title: 'Magneze',
+    artist: 'Surgeon',
+    year: 1994,
+    note: 'A Birmingham techno reference for metallic minimal pressure and industrial loop discipline.',
+  },
+  ghettotech: {
+    title: 'Ass-N-Titties',
+    artist: 'DJ Assault',
+    year: 1997,
+    note: 'A Detroit ghettotech reference for fast, raw electro-bass club directness.',
+  },
+  'future-garage': {
+    title: 'Archangel',
+    artist: 'Burial',
+    year: 2007,
+    note: 'A future garage reference for shadowed swing, vocal ghosts, and post-dubstep atmosphere.',
+  },
+};
+
+const playbackOptions: Track['playbackOptions'] = [
+  { group: 'platform-embed', provider: 'spotify', label: 'Spotify embed', status: 'pending-url' },
+  { group: 'platform-embed', provider: 'apple-music', label: 'Apple Music embed', status: 'pending-url' },
+  { group: 'platform-embed', provider: 'soundcloud', label: 'SoundCloud embed', status: 'pending-url' },
+  { group: 'platform-embed', provider: 'youtube', label: 'YouTube embed', status: 'pending-url' },
+  { group: 'free-audio', provider: 'internet-archive', label: 'Internet Archive search', status: 'candidate' },
+  { group: 'free-audio', provider: 'jamendo', label: 'Jamendo search', status: 'candidate' },
+];
+
 export const tracks: Track[] = genres.flatMap((genre, index) => [
+  canonicalTrackFor(genre.id),
   {
     id: `${genre.id}-pulse-a`,
     title: `${genre.name} Signal A`,
@@ -464,6 +676,25 @@ export const tracks: Track[] = genres.flatMap((genre, index) => [
     note: `Reserved slot for a licensed or locally supplied ${genre.name} reference track.`,
   },
 ]);
+
+function canonicalTrackFor(genreId: GenreId): Track {
+  const seed = canonicalTracksByGenre[genreId];
+
+  return {
+    id: `${genreId}-canonical`,
+    title: seed.title,
+    artist: seed.artist,
+    year: seed.year,
+    duration: 'Source pending',
+    genreId,
+    audioSrc: '',
+    sourceKind: 'curated-reference',
+    playbackStatus: 'metadata-only',
+    canonical: true,
+    playbackOptions,
+    note: seed.note,
+  };
+}
 
 export const relationships: Relationship[] = [
   rel('detroit-to-minimal', 'detroit-techno', 'minimal-techno', 'history', 5, true, 'Blueprint reduction'),

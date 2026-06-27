@@ -25,10 +25,15 @@ export function useAudioPlayer(track: Track | null, isPlaying: boolean): AudioPl
       return;
     }
 
-    if (track.playbackStatus === 'reserved') {
+    if (track.playbackStatus !== 'ready') {
       audioRef.current?.pause();
       audioRef.current = null;
-      setState({ canPlay: false, error: 'Audio slot reserved', progress: 0, duration: 0 });
+      setState({
+        canPlay: false,
+        error: track.playbackStatus === 'reserved' ? 'Audio slot reserved' : 'Playback source pending',
+        progress: 0,
+        duration: 0,
+      });
       return;
     }
 

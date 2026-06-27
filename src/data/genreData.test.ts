@@ -44,6 +44,17 @@ describe('genre dataset', () => {
     }
   });
 
+  it('provides a canonical real-track candidate with platform and free-audio playback options for each genre', () => {
+    for (const genre of genres) {
+      const canonical = getTracksForGenre(genre.id).filter((track) => track.canonical);
+      expect(canonical).toHaveLength(1);
+      expect(canonical[0].playbackStatus).toBe('metadata-only');
+      expect(canonical[0].sourceKind).toBe('curated-reference');
+      expect(canonical[0].playbackOptions?.some((option) => option.group === 'platform-embed')).toBe(true);
+      expect(canonical[0].playbackOptions?.some((option) => option.group === 'free-audio')).toBe(true);
+    }
+  });
+
   it('uses only the purple, blue, and pink atom color system', () => {
     const allowedColors = new Set([
       '#4f46e5',
@@ -77,8 +88,8 @@ describe('genre dataset', () => {
     }
     for (const track of tracks) {
       expect(genreIds.has(track.genreId)).toBe(true);
-      expect(['placeholder', 'local-file', 'external-url']).toContain(track.sourceKind);
-      expect(['ready', 'reserved']).toContain(track.playbackStatus);
+      expect(['placeholder', 'local-file', 'external-url', 'curated-reference']).toContain(track.sourceKind);
+      expect(['ready', 'reserved', 'metadata-only']).toContain(track.playbackStatus);
       if (track.playbackStatus === 'ready') {
         expect(track.audioSrc).toMatch(/^\/audio\/placeholder-/);
       }
