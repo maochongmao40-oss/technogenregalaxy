@@ -1,6 +1,7 @@
 import { OrbitControls, Stars } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import type { Dispatch } from 'react';
+import { useRef, type Dispatch } from 'react';
+import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { genres, getGenreById, relationships } from '../data/genreData';
 import type { GalaxyAction, GalaxyState } from '../state/galaxyState';
 import { CameraRig } from './CameraRig';
@@ -13,13 +14,14 @@ interface GenreGalaxyProps {
 }
 
 export function GenreGalaxy({ state, dispatch }: GenreGalaxyProps) {
+  const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const selectedGenre = state.selectedGenreId ? getGenreById(state.selectedGenreId) : undefined;
   const highlightedGenreId = state.hoveredGenreId ?? state.selectedGenreId;
 
   return (
-    <Canvas camera={{ position: [0, 2.4, 8], fov: 58 }} dpr={[1, 1.8]} gl={{ antialias: true }}>
+    <Canvas camera={{ position: [0, 0.5, 7.2], fov: 54 }} dpr={[1, 1.8]} gl={{ antialias: true }}>
       <color attach="background" args={['#030307']} />
-      <fog attach="fog" args={['#030307', 5, 15]} />
+      <fog attach="fog" args={['#030307', 6, 18]} />
       <ambientLight intensity={0.35} />
       <pointLight position={[0, 3, 4]} intensity={1.2} color="#00e5ff" />
       <pointLight position={[-4, -2, -3]} intensity={0.8} color="#ff2bd6" />
@@ -39,8 +41,15 @@ export function GenreGalaxy({ state, dispatch }: GenreGalaxyProps) {
           onSelect={(genreId) => dispatch({ type: 'selectGenre', genreId })}
         />
       ))}
-      <CameraRig selectedGenre={selectedGenre} />
-      <OrbitControls enablePan={false} minDistance={3.2} maxDistance={12} enableDamping dampingFactor={0.08} />
+      <CameraRig selectedGenre={selectedGenre} controlsRef={controlsRef} />
+      <OrbitControls
+        ref={controlsRef}
+        enablePan
+        minDistance={2.1}
+        maxDistance={14}
+        enableDamping
+        dampingFactor={0.08}
+      />
     </Canvas>
   );
 }

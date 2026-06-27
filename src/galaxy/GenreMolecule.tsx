@@ -1,7 +1,9 @@
+import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import type { Mesh } from 'three';
 import type { Genre, GenreId } from '../data/genreTypes';
+import { graphPositionFor } from './graphLayout';
 import { emissiveIntensity } from './visualProfiles';
 
 interface GenreMoleculeProps {
@@ -29,7 +31,7 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
   });
 
   return (
-    <group position={genre.position}>
+    <group position={graphPositionFor(genre)}>
       <mesh
         ref={meshRef}
         onClick={(event) => {
@@ -55,6 +57,18 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
         <torusGeometry args={[0.34, 0.006, 8, 64]} />
         <meshBasicMaterial color={genre.visualProfile.accent} transparent opacity={active ? 0.65 : 0.24} />
       </mesh>
+      <Text
+        position={[0, -0.48, 0.02]}
+        fontSize={active ? 0.12 : 0.095}
+        maxWidth={0.95}
+        anchorX="center"
+        anchorY="middle"
+        color={active ? '#ffffff' : 'rgba(244,247,251,0.72)'}
+        outlineWidth={0.005}
+        outlineColor="#030307"
+      >
+        {genre.name}
+      </Text>
     </group>
   );
 }

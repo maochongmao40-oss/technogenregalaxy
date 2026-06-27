@@ -9,3 +9,14 @@ export function layerColor(layer: RelationshipLayerType): string {
   if (layer === 'sound') return '#8affc1';
   return '#ff2bd6';
 }
+
+export function relationshipLineWidth(layer: RelationshipLayerType, strength: number, highlighted: boolean): number {
+  const base = layer === 'history' ? 0.42 : layer === 'sound' ? 0.32 : 0.26;
+  const highlightBoost = highlighted ? 0.42 : 0.12;
+  return strength * (base + highlightBoost);
+}
+
+export function relationshipOpacity(layer: RelationshipLayerType, highlighted: boolean): number {
+  if (highlighted) return layer === 'scene' ? 0.86 : 0.94;
+  return layer === 'history' ? 0.2 : layer === 'sound' ? 0.16 : 0.24;
+}

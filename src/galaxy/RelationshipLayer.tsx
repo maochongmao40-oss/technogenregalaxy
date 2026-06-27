@@ -1,8 +1,9 @@
 import { Line } from '@react-three/drei';
 import { getGenreById } from '../data/genreData';
 import type { Relationship, RelationshipLayerType } from '../data/genreTypes';
-import { curvePoints } from './geometry';
-import { layerColor } from './visualProfiles';
+import { relationshipCurvePoints } from './geometry';
+import { graphPositionFor } from './graphLayout';
+import { layerColor, relationshipLineWidth, relationshipOpacity } from './visualProfiles';
 
 interface RelationshipLayerProps {
   activeLayer: RelationshipLayerType;
@@ -24,11 +25,16 @@ export function RelationshipLayer({ activeLayer, relationships, highlightedGenre
           return (
             <Line
               key={relationship.id}
-              points={curvePoints(source.position, target.position, relationship.strength * 0.18)}
+              points={relationshipCurvePoints(
+                graphPositionFor(source),
+                graphPositionFor(target),
+                activeLayer,
+                relationship.strength,
+              )}
               color={layerColor(activeLayer)}
-              lineWidth={highlighted ? relationship.strength * 0.7 : relationship.strength * 0.24}
+              lineWidth={relationshipLineWidth(activeLayer, relationship.strength, highlighted)}
               transparent
-              opacity={highlighted ? 0.92 : 0.22}
+              opacity={relationshipOpacity(activeLayer, highlighted)}
             />
           );
         })}
