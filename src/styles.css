@@ -55,8 +55,8 @@ canvas {
 }
 
 .layer-controls .is-active {
-  border-color: #00e5ff;
-  color: #00e5ff;
+  border-color: #38bdf8;
+  color: #38bdf8;
 }
 
 .genre-panel {
@@ -124,8 +124,8 @@ canvas {
 
 .keyword-list li {
   padding: 6px 8px;
-  border: 1px solid rgba(138, 255, 193, 0.24);
-  color: #8affc1;
+  border: 1px solid rgba(192, 132, 252, 0.24);
+  color: #c084fc;
 }
 
 .track-list {
@@ -193,8 +193,8 @@ canvas {
   height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(circle at 20% 20%, rgba(0, 229, 255, 0.14), transparent 26rem),
-    radial-gradient(circle at 82% 72%, rgba(255, 43, 214, 0.1), transparent 24rem),
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.14), transparent 26rem),
+    radial-gradient(circle at 82% 72%, rgba(236, 72, 153, 0.1), transparent 24rem),
     #030307;
 }
 

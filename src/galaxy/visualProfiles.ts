@@ -6,9 +6,9 @@ export function emissiveIntensity(profile: VisualProfile, active: boolean): numb
 
 export function layerColor(layer: RelationshipViewType): string {
   if (layer === 'all') return '#f4f7fb';
-  if (layer === 'history') return '#00e5ff';
-  if (layer === 'sound') return '#8affc1';
-  return '#ff2bd6';
+  if (layer === 'history') return '#38bdf8';
+  if (layer === 'sound') return '#a855f7';
+  return '#ec4899';
 }
 
 export function relationshipLineWidth(layer: RelationshipLayerType, strength: number, highlighted: boolean): number {

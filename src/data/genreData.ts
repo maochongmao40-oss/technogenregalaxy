@@ -18,7 +18,7 @@ export const genres: Genre[] = [
     summary:
       'A machine-soul blueprint where futurist synths, funk memory, and industrial city pressure become precise dance music. It acts as the central gravity source for this galaxy.',
     soundKeywords: ['machine funk', 'futurist', 'syncopated', 'soulful'],
-    visualProfile: { color: '#00e5ff', accent: '#ffffff', pulseSpeed: 0.8, particleDensity: 1, motion: 'stable' },
+    visualProfile: { color: '#38bdf8', accent: '#c084fc', pulseSpeed: 0.8, particleDensity: 1, motion: 'stable' },
     position: [0, 0, 0],
   },
   {
@@ -31,7 +31,7 @@ export const genres: Genre[] = [
     summary:
       'A stripped reduction of techno where small changes become the drama. Repetition, space, and microscopic modulation carry the floor forward.',
     soundKeywords: ['reduced', 'hypnotic', 'dry', 'micro-shift'],
-    visualProfile: { color: '#7df9ff', accent: '#8affc1', pulseSpeed: 0.55, particleDensity: 0.55, motion: 'stable' },
+    visualProfile: { color: '#60a5fa', accent: '#a855f7', pulseSpeed: 0.55, particleDensity: 0.55, motion: 'stable' },
     position: [2.4, 0.8, -0.6],
   },
   {
@@ -44,7 +44,7 @@ export const genres: Genre[] = [
     summary:
       'Techno submerged in echo chambers. Chords smear into fog, kicks move with patience, and delay turns the club into a deep pressure field.',
     soundKeywords: ['delay', 'fog', 'chords', 'deep'],
-    visualProfile: { color: '#3de1ff', accent: '#a5fff3', pulseSpeed: 0.42, particleDensity: 0.8, motion: 'mist' },
+    visualProfile: { color: '#0ea5e9', accent: '#93c5fd', pulseSpeed: 0.42, particleDensity: 0.8, motion: 'mist' },
     position: [1.5, -1.1, -1.8],
   },
   {
@@ -57,7 +57,7 @@ export const genres: Genre[] = [
     summary:
       'The 303 line pushed into harder techno pressure. Its identity is liquid, biting, and unstable, always twisting toward another peak.',
     soundKeywords: ['303', 'squelch', 'driving', 'liquid'],
-    visualProfile: { color: '#b6ff00', accent: '#fff36b', pulseSpeed: 1.15, particleDensity: 0.95, motion: 'spiral' },
+    visualProfile: { color: '#d946ef', accent: '#38bdf8', pulseSpeed: 1.15, particleDensity: 0.95, motion: 'spiral' },
     position: [-1.9, 1.0, -0.9],
   },
   {
@@ -70,7 +70,7 @@ export const genres: Genre[] = [
     summary:
       'A high-pressure branch built for impact: fast kicks, sharpened transients, compressed tension, and a direct physical reading of techno energy.',
     soundKeywords: ['fast', 'compressed', 'impact', 'peak-time'],
-    visualProfile: { color: '#ff2bd6', accent: '#ffffff', pulseSpeed: 1.35, particleDensity: 1.2, motion: 'sharp' },
+    visualProfile: { color: '#ec4899', accent: '#c084fc', pulseSpeed: 1.35, particleDensity: 1.2, motion: 'sharp' },
     position: [0.4, 2.6, -1.3],
   },
   {
@@ -83,7 +83,7 @@ export const genres: Genre[] = [
     summary:
       'Techno routed through metal, noise, and factory rhythm. It favors abrasion, weight, and harsh spatial texture over polished club shine.',
     soundKeywords: ['metallic', 'noise', 'factory', 'austere'],
-    visualProfile: { color: '#ff5a5f', accent: '#9ea3a8', pulseSpeed: 0.95, particleDensity: 0.9, motion: 'sharp' },
+    visualProfile: { color: '#8b5cf6', accent: '#f472b6', pulseSpeed: 0.95, particleDensity: 0.9, motion: 'sharp' },
     position: [1.8, 2.6, -2.6],
   },
   {
@@ -96,7 +96,7 @@ export const genres: Genre[] = [
     summary:
       'A brutalist acceleration of hard techno: relentless loops, abrasive drive, and a crushed sense of forward motion.',
     soundKeywords: ['relentless', 'distorted', 'looped', 'brutal'],
-    visualProfile: { color: '#ff9f1c', accent: '#ff2bd6', pulseSpeed: 1.55, particleDensity: 1.35, motion: 'sharp' },
+    visualProfile: { color: '#c084fc', accent: '#ec4899', pulseSpeed: 1.55, particleDensity: 1.35, motion: 'sharp' },
     position: [2.9, 3.2, -3.4],
   },
   {
@@ -109,7 +109,7 @@ export const genres: Genre[] = [
     summary:
       'A cinematic, harmonically led techno branch where arpeggios, long breakdowns, and glowing synth lines shape the journey.',
     soundKeywords: ['arpeggiated', 'cinematic', 'emotional', 'polished'],
-    visualProfile: { color: '#8b5cf6', accent: '#00e5ff', pulseSpeed: 0.72, particleDensity: 0.75, motion: 'stable' },
+    visualProfile: { color: '#8b5cf6', accent: '#38bdf8', pulseSpeed: 0.72, particleDensity: 0.75, motion: 'stable' },
     position: [-0.8, 2.2, 1.9],
   },
   {
@@ -122,7 +122,7 @@ export const genres: Genre[] = [
     summary:
       'Techno structure diffused into atmosphere. Rhythm remains present, but pads, drift, and space become the primary architecture.',
     soundKeywords: ['atmospheric', 'drifting', 'soft pulse', 'immersive'],
-    visualProfile: { color: '#76e4f7', accent: '#c7d2fe', pulseSpeed: 0.36, particleDensity: 1.05, motion: 'mist' },
+    visualProfile: { color: '#93c5fd', accent: '#c084fc', pulseSpeed: 0.36, particleDensity: 1.05, motion: 'mist' },
     position: [-0.2, -2.4, -1.1],
   },
   {
@@ -135,7 +135,7 @@ export const genres: Genre[] = [
     summary:
       'Robotic funk, breakbeats, vocoders, and machine syncopation. Electro is one of techno historys closest electric relatives.',
     soundKeywords: ['breakbeat', 'robotic', 'vocoder', 'funk'],
-    visualProfile: { color: '#22d3ee', accent: '#f0abfc', pulseSpeed: 0.9, particleDensity: 0.8, motion: 'fragmented' },
+    visualProfile: { color: '#22d3ee', accent: '#c084fc', pulseSpeed: 0.9, particleDensity: 0.8, motion: 'fragmented' },
     position: [-2.4, -0.1, 0.8],
   },
   {
@@ -148,7 +148,7 @@ export const genres: Genre[] = [
     summary:
       'Raw drum machines, jacking basslines, and warehouse function. It is a parallel Midwest engine to Detroit techno.',
     soundKeywords: ['jacking', 'warehouse', 'raw', 'swing'],
-    visualProfile: { color: '#facc15', accent: '#fb7185', pulseSpeed: 0.82, particleDensity: 0.8, motion: 'route' },
+    visualProfile: { color: '#a855f7', accent: '#f472b6', pulseSpeed: 0.82, particleDensity: 0.8, motion: 'route' },
     position: [-3.2, -1.0, 1.4],
   },
   {
@@ -161,7 +161,7 @@ export const genres: Genre[] = [
     summary:
       'House music mutated by the TB-303. Its rubbery line became a shared chemical signal for club culture and rave expansion.',
     soundKeywords: ['303', 'rave', 'jacking', 'rubbery'],
-    visualProfile: { color: '#d9f99d', accent: '#b6ff00', pulseSpeed: 1.05, particleDensity: 0.9, motion: 'spiral' },
+    visualProfile: { color: '#d946ef', accent: '#60a5fa', pulseSpeed: 1.05, particleDensity: 0.9, motion: 'spiral' },
     position: [-3.4, 0.7, 0.2],
   },
   {
@@ -174,7 +174,7 @@ export const genres: Genre[] = [
     summary:
       'Warm chords, soulful depth, and a smoother body language. It connects club function to intimacy and long-form atmosphere.',
     soundKeywords: ['warm', 'soulful', 'chords', 'smooth'],
-    visualProfile: { color: '#fb923c', accent: '#fde68a', pulseSpeed: 0.6, particleDensity: 0.65, motion: 'mist' },
+    visualProfile: { color: '#6366f1', accent: '#ec4899', pulseSpeed: 0.6, particleDensity: 0.65, motion: 'mist' },
     position: [-4.0, -2.2, 0.8],
   },
   {
@@ -187,7 +187,7 @@ export const genres: Genre[] = [
     summary:
       'Body music built from sequenced bass, militarized rhythm, and industrial attitude. It feeds techno with dark physical discipline.',
     soundKeywords: ['body', 'sequenced', 'industrial', 'stark'],
-    visualProfile: { color: '#ef4444', accent: '#e5e7eb', pulseSpeed: 0.88, particleDensity: 0.7, motion: 'route' },
+    visualProfile: { color: '#7c3aed', accent: '#f472b6', pulseSpeed: 0.88, particleDensity: 0.7, motion: 'route' },
     position: [3.0, 0.2, -1.2],
   },
   {
@@ -200,7 +200,7 @@ export const genres: Genre[] = [
     summary:
       'A slowed, heavy Belgian club mutation between EBM, acid, and early rave. It moves with a strange, low-slung menace.',
     soundKeywords: ['slow', 'heavy', 'Belgian', 'dark'],
-    visualProfile: { color: '#a855f7', accent: '#ef4444', pulseSpeed: 0.5, particleDensity: 0.7, motion: 'route' },
+    visualProfile: { color: '#a855f7', accent: '#ec4899', pulseSpeed: 0.5, particleDensity: 0.7, motion: 'route' },
     position: [3.8, -0.9, -0.2],
   },
   {
@@ -226,7 +226,7 @@ export const genres: Genre[] = [
     summary:
       'A psychedelic trance branch with spiraling leads, long-form acceleration, and a bright outdoor ritual energy.',
     soundKeywords: ['psychedelic', 'spiral', 'ritual', 'bright'],
-    visualProfile: { color: '#14f195', accent: '#f0abfc', pulseSpeed: 1.0, particleDensity: 1.0, motion: 'spiral' },
+    visualProfile: { color: '#d946ef', accent: '#f472b6', pulseSpeed: 1.0, particleDensity: 1.0, motion: 'spiral' },
     position: [-2.4, 4.0, 2.4],
   },
   {
@@ -252,7 +252,7 @@ export const genres: Genre[] = [
     summary:
       'Breakbeats cut into fast, syncopated architecture over bass weight and sound-system space. It turns rave energy into dense rhythm design.',
     soundKeywords: ['breaks', 'bass', 'syncopated', 'sound-system'],
-    visualProfile: { color: '#10b981', accent: '#facc15', pulseSpeed: 1.28, particleDensity: 1.2, motion: 'fragmented' },
+    visualProfile: { color: '#4f46e5', accent: '#ec4899', pulseSpeed: 1.28, particleDensity: 1.2, motion: 'fragmented' },
     position: [-1.1, -3.8, 3.2],
   },
   {
@@ -265,7 +265,7 @@ export const genres: Genre[] = [
     summary:
       'Dance music folded into listening experiments: fractured rhythm, digital texture, and emotional detail under precise programming.',
     soundKeywords: ['fractured', 'digital', 'detailed', 'listening'],
-    visualProfile: { color: '#60a5fa', accent: '#f0abfc', pulseSpeed: 0.68, particleDensity: 1.1, motion: 'fragmented' },
+    visualProfile: { color: '#60a5fa', accent: '#c084fc', pulseSpeed: 0.68, particleDensity: 1.1, motion: 'fragmented' },
     position: [0.8, -3.2, 2.1],
   },
   {
@@ -278,7 +278,7 @@ export const genres: Genre[] = [
     summary:
       'Music as environment: texture, duration, and space before rhythm. It gives the galaxy its fog, depth, and long horizon.',
     soundKeywords: ['space', 'texture', 'slow', 'environmental'],
-    visualProfile: { color: '#a7f3d0', accent: '#bfdbfe', pulseSpeed: 0.24, particleDensity: 1.3, motion: 'mist' },
+    visualProfile: { color: '#93c5fd', accent: '#c084fc', pulseSpeed: 0.24, particleDensity: 1.3, motion: 'mist' },
     position: [1.0, -4.4, 0.2],
   },
   {
@@ -291,7 +291,7 @@ export const genres: Genre[] = [
     summary:
       'Sequencer-driven electronic journeys that prefigure later hypnotic club structures. Long arpeggios become spatial machinery.',
     soundKeywords: ['sequencer', 'kosmische', 'arpeggio', 'long-form'],
-    visualProfile: { color: '#fef08a', accent: '#38bdf8', pulseSpeed: 0.44, particleDensity: 0.75, motion: 'stable' },
+    visualProfile: { color: '#6366f1', accent: '#38bdf8', pulseSpeed: 0.44, particleDensity: 0.75, motion: 'stable' },
     position: [2.5, -3.5, 1.5],
   },
   {
@@ -304,7 +304,7 @@ export const genres: Genre[] = [
     summary:
       'Swinging drums, chopped vocals, and bassline elasticity. It connects house pressure to the UKs later bass continuum.',
     soundKeywords: ['swing', 'bassline', 'chopped vocal', 'shuffle'],
-    visualProfile: { color: '#2dd4bf', accent: '#f472b6', pulseSpeed: 0.95, particleDensity: 0.85, motion: 'route' },
+    visualProfile: { color: '#22d3ee', accent: '#f472b6', pulseSpeed: 0.95, particleDensity: 0.85, motion: 'route' },
     position: [-3.4, -3.2, 3.5],
   },
   {
@@ -317,7 +317,7 @@ export const genres: Genre[] = [
     summary:
       'A broad breakbeat zone where syncopated drum programming replaces straight four-four as the main engine.',
     soundKeywords: ['syncopated', 'breakbeat', 'elastic', 'club'],
-    visualProfile: { color: '#fb7185', accent: '#22d3ee', pulseSpeed: 1.02, particleDensity: 0.9, motion: 'fragmented' },
+    visualProfile: { color: '#ec4899', accent: '#22d3ee', pulseSpeed: 1.02, particleDensity: 0.9, motion: 'fragmented' },
     position: [-3.0, -2.0, 2.7],
   },
 ];

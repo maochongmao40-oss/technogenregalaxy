@@ -66,11 +66,10 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
           color={genre.visualProfile.color}
           emissive={genre.visualProfile.color}
           emissiveIntensity={atomShapeFor(false, genre.visualProfile.particleDensity).material.emissiveIntensity}
-          transparent
-          opacity={0.84}
-          roughness={0.42}
+          opacity={1}
+          roughness={0.36}
           metalness={0.08}
-          clearcoat={0.08}
+          clearcoat={0.18}
           reflectivity={0.6}
         />
       </mesh>

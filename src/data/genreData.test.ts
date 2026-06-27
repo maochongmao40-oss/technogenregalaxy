@@ -26,6 +26,30 @@ describe('genre dataset', () => {
     }
   });
 
+  it('uses only the purple, blue, and pink atom color system', () => {
+    const allowedColors = new Set([
+      '#4f46e5',
+      '#6366f1',
+      '#7c3aed',
+      '#8b5cf6',
+      '#a855f7',
+      '#c084fc',
+      '#d946ef',
+      '#ec4899',
+      '#f472b6',
+      '#0ea5e9',
+      '#38bdf8',
+      '#60a5fa',
+      '#93c5fd',
+      '#22d3ee',
+    ]);
+
+    for (const genre of genres) {
+      expect(allowedColors.has(genre.visualProfile.color)).toBe(true);
+      expect(allowedColors.has(genre.visualProfile.accent)).toBe(true);
+    }
+  });
+
   it('only references existing genres and tracks', () => {
     const genreIds = new Set(genres.map((genre) => genre.id));
     for (const relationship of relationships) {

@@ -30,13 +30,13 @@ export function atomShapeFor(active: boolean, particleDensity: number): AtomShap
   if (!active) {
     return {
       radius,
-      scale: { x: 1.12, y: 1.12, z: 0.18 },
+      scale: { x: 1, y: 1, z: 1 },
       material: {
-        opacity: 0.84,
-        roughness: 0.42,
+        opacity: 1,
+        roughness: 0.36,
         metalness: 0.08,
-        clearcoat: 0.08,
-        emissiveIntensity: 0.38,
+        clearcoat: 0.18,
+        emissiveIntensity: 0.28,
       },
       animation: {
         scalePulse: 0,
@@ -46,7 +46,7 @@ export function atomShapeFor(active: boolean, particleDensity: number): AtomShap
   }
 
   return {
-    radius: radius * 1.82,
+    radius: radius * 1.72,
     scale: { x: 1, y: 1, z: 1 },
     material: {
       opacity: 1,

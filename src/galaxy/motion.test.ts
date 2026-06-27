@@ -11,15 +11,21 @@ describe('motion helpers', () => {
     expect(softSpring(0.75)).toBeLessThan(1);
   });
 
-  it('turns inactive atoms from a flattened disc into a dimensional selected sphere', () => {
+  it('keeps every atom as a dimensional sphere before and after selection', () => {
     const inactive = atomShapeFor(false, 0.2);
     const active = atomShapeFor(true, 0.2);
 
-    expect(inactive.scale.z).toBeLessThan(inactive.scale.x);
+    expect(inactive.scale.z).toBeCloseTo(inactive.scale.x);
+    expect(inactive.scale.y).toBeCloseTo(inactive.scale.x);
     expect(active.scale.z).toBeCloseTo(active.scale.x);
+    expect(active.scale.y).toBeCloseTo(active.scale.x);
     expect(active.radius).toBeGreaterThan(inactive.radius);
-    expect(active.material.opacity).toBeGreaterThan(inactive.material.opacity);
     expect(active.material.emissiveIntensity).toBeLessThan(inactive.material.emissiveIntensity);
+  });
+
+  it('uses opaque materials throughout selection to prevent depth-sort flashing', () => {
+    expect(atomShapeFor(false, 0.2).material.opacity).toBe(1);
+    expect(atomShapeFor(true, 0.2).material.opacity).toBe(1);
   });
 
   it('keeps atom scale stable over time instead of applying a breathing pulse', () => {

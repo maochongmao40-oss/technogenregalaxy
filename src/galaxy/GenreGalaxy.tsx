@@ -25,8 +25,8 @@ export function GenreGalaxy({ state, dispatch }: GenreGalaxyProps) {
       <fog attach="fog" args={['#030307', 6, 18]} />
       <ambientLight intensity={0.18} />
       <directionalLight position={[3.5, 4.2, 5.5]} intensity={1.35} color="#ffffff" castShadow />
-      <pointLight position={[0, 3, 4]} intensity={0.9} color="#00e5ff" />
-      <pointLight position={[-4, -2, -3]} intensity={0.62} color="#ff2bd6" />
+      <pointLight position={[0, 3, 4]} intensity={0.9} color="#38bdf8" />
+      <pointLight position={[-4, -2, -3]} intensity={0.62} color="#ec4899" />
       <pointLight position={[2.8, -1.8, 2.4]} intensity={0.42} color="#fff4bf" />
       <Stars radius={18} depth={8} count={900} factor={2} saturation={0} fade speed={0.18} />
       <RelationshipLayer
