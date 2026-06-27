@@ -1,6 +1,7 @@
 import { OrbitControls, Stars } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { useRef, type Dispatch } from 'react';
+import { MOUSE, TOUCH } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import { genres, getGenreById, relationships } from '../data/genreData';
 import type { GalaxyAction, GalaxyState } from '../state/galaxyState';
@@ -45,10 +46,17 @@ export function GenreGalaxy({ state, dispatch }: GenreGalaxyProps) {
       <OrbitControls
         ref={controlsRef}
         enablePan
+        enableRotate
         minDistance={2.1}
         maxDistance={14}
+        panSpeed={0.85}
+        rotateSpeed={0.45}
+        zoomSpeed={0.72}
+        screenSpacePanning
         enableDamping
-        dampingFactor={0.08}
+        dampingFactor={0.12}
+        mouseButtons={{ LEFT: MOUSE.PAN, MIDDLE: MOUSE.DOLLY, RIGHT: MOUSE.ROTATE }}
+        touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_ROTATE }}
       />
     </Canvas>
   );

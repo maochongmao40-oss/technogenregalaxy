@@ -1,4 +1,5 @@
 export type RelationshipLayerType = 'history' | 'sound' | 'scene';
+export type RelationshipViewType = 'all' | RelationshipLayerType;
 
 export type GenreId = string;
 export type TrackId = string;
@@ -6,7 +7,7 @@ export type TrackId = string;
 export type Vector3Tuple = [number, number, number];
 
 export interface RelationshipLayer {
-  id: RelationshipLayerType;
+  id: RelationshipViewType;
   label: string;
   description: string;
 }

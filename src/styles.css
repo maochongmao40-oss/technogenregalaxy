@@ -71,6 +71,18 @@ canvas {
   background: rgba(3, 3, 7, 0.68);
   backdrop-filter: blur(18px);
   overflow-wrap: anywhere;
+  transition: box-shadow 240ms ease, border-color 240ms ease;
+  will-change: transform;
+}
+
+.panel-drag-handle {
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.panel-drag-handle:active {
+  cursor: grabbing;
 }
 
 .genre-panel h1,

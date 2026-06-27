@@ -21,6 +21,10 @@ describe('galaxy state', () => {
     expect(selectLayer(initialGalaxyState, 'scene').activeLayer).toBe('scene');
   });
 
+  it('defaults to showing all relationship layers', () => {
+    expect(initialGalaxyState.activeLayer).toBe('all');
+  });
+
   it('starts and stops tracks', () => {
     const playing = startTrack(initialGalaxyState, 'detroit-techno-pulse-a');
     expect(playing.currentTrackId).toBe('detroit-techno-pulse-a');

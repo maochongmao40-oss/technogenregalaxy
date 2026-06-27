@@ -11,7 +11,7 @@ import {
 
 describe('genre dataset', () => {
   it('contains the required relationship layers', () => {
-    expect(relationshipLayers.map((layer) => layer.id)).toEqual(['history', 'sound', 'scene']);
+    expect(relationshipLayers.map((layer) => layer.id)).toEqual(['all', 'history', 'sound', 'scene']);
   });
 
   it('contains the first-version genre set', () => {

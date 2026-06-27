@@ -13,7 +13,15 @@ interface CameraRigProps {
 
 export function CameraRig({ selectedGenre, controlsRef }: CameraRigProps) {
   const { camera } = useThree();
-  const focusProgress = useRef(1);
+  const focus = useRef({
+    active: false,
+    elapsed: 0,
+    duration: 0.86,
+    fromCamera: new Vector3(),
+    toCamera: new Vector3(),
+    fromTarget: new Vector3(),
+    toTarget: new Vector3(),
+  });
   const target = useMemo(() => {
     if (!selectedGenre) return new Vector3(0, 2.4, 8);
     return new Vector3(...cameraTargetFor(graphPositionFor(selectedGenre)));
@@ -24,22 +32,49 @@ export function CameraRig({ selectedGenre, controlsRef }: CameraRigProps) {
   }, [selectedGenre]);
 
   useEffect(() => {
-    focusProgress.current = 0;
-  }, [selectedGenre]);
+    const controls = controlsRef.current;
+    focus.current = {
+      active: true,
+      elapsed: 0,
+      duration: 0.86,
+      fromCamera: camera.position.clone(),
+      toCamera: target.clone(),
+      fromTarget: controls?.target.clone() ?? new Vector3(0, 0, 0),
+      toTarget: lookAtTarget.clone(),
+    };
+  }, [camera, controlsRef, lookAtTarget, selectedGenre, target]);
 
-  useFrame(() => {
-    if (focusProgress.current >= 1) return;
-    focusProgress.current = Math.min(1, focusProgress.current + 0.045);
-    const easing = 1 - Math.pow(1 - focusProgress.current, 3);
-    camera.position.lerp(target, 0.055 + easing * 0.035);
+  useFrame((_, delta) => {
+    const transition = focus.current;
+    if (!transition.active) return;
+
+    transition.elapsed = Math.min(transition.duration, transition.elapsed + delta);
+    const t = transition.elapsed / transition.duration;
+    const eased = iosSpring(t);
+    camera.position.lerpVectors(transition.fromCamera, transition.toCamera, eased);
     const controls = controlsRef.current;
     if (controls) {
-      controls.target.lerp(lookAtTarget, 0.08 + easing * 0.04);
+      controls.target.lerpVectors(transition.fromTarget, transition.toTarget, eased);
       controls.update();
     } else {
-      camera.lookAt(lookAtTarget);
+      camera.lookAt(transition.toTarget);
+    }
+
+    if (transition.elapsed >= transition.duration) {
+      camera.position.copy(transition.toCamera);
+      if (controls) {
+        controls.target.copy(transition.toTarget);
+        controls.update();
+      }
+      transition.active = false;
     }
   });
 
   return null;
+}
+
+function iosSpring(t: number): number {
+  if (t >= 1) return 1;
+  const eased = 1 - Math.exp(-6.6 * t) * Math.cos(8.2 * t);
+  return Math.min(1.08, Math.max(0, eased));
 }

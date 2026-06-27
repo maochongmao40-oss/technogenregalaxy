@@ -1,9 +1,9 @@
 import { relationshipLayers } from '../data/genreData';
-import type { RelationshipLayerType } from '../data/genreTypes';
+import type { RelationshipViewType } from '../data/genreTypes';
 
 interface LayerControlsProps {
-  activeLayer: RelationshipLayerType;
-  onChange: (layer: RelationshipLayerType) => void;
+  activeLayer: RelationshipViewType;
+  onChange: (layer: RelationshipViewType) => void;
 }
 
 export function LayerControls({ activeLayer, onChange }: LayerControlsProps) {

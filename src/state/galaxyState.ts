@@ -1,9 +1,9 @@
-import type { GenreId, RelationshipLayerType, TrackId } from '../data/genreTypes';
+import type { GenreId, RelationshipViewType, TrackId } from '../data/genreTypes';
 
 export interface GalaxyState {
   selectedGenreId: GenreId | null;
   hoveredGenreId: GenreId | null;
-  activeLayer: RelationshipLayerType;
+  activeLayer: RelationshipViewType;
   currentTrackId: TrackId | null;
   isPlaying: boolean;
 }
@@ -11,14 +11,14 @@ export interface GalaxyState {
 export type GalaxyAction =
   | { type: 'selectGenre'; genreId: GenreId }
   | { type: 'hoverGenre'; genreId: GenreId | null }
-  | { type: 'selectLayer'; layer: RelationshipLayerType }
+  | { type: 'selectLayer'; layer: RelationshipViewType }
   | { type: 'startTrack'; trackId: TrackId }
   | { type: 'stopTrack' };
 
 export const initialGalaxyState: GalaxyState = {
   selectedGenreId: 'detroit-techno',
   hoveredGenreId: null,
-  activeLayer: 'history',
+  activeLayer: 'all',
   currentTrackId: null,
   isPlaying: false,
 };
@@ -27,7 +27,7 @@ export function selectGenre(state: GalaxyState, genreId: GenreId): GalaxyState {
   return { ...state, selectedGenreId: genreId };
 }
 
-export function selectLayer(state: GalaxyState, layer: RelationshipLayerType): GalaxyState {
+export function selectLayer(state: GalaxyState, layer: RelationshipViewType): GalaxyState {
   return { ...state, activeLayer: layer };
 }
 

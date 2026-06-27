@@ -1,6 +1,7 @@
 import type { Genre, GenreId, Relationship, RelationshipLayer, RelationshipLayerType, Track } from './genreTypes';
 
 export const relationshipLayers: RelationshipLayer[] = [
+  { id: 'all', label: 'All', description: 'Show every relationship curve at once.' },
   { id: 'history', label: 'History', description: 'Directional influence and descent.' },
   { id: 'sound', label: 'Sound', description: 'Shared rhythm, texture, tempo, or atmosphere.' },
   { id: 'scene', label: 'Scene', description: 'Cities, clubs, labels, and cultural context.' },

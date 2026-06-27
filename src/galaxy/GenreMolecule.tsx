@@ -32,6 +32,22 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
 
   return (
     <group position={graphPositionFor(genre)}>
+      {active ? (
+        <mesh>
+          <sphereGeometry args={[0.42, 48, 48]} />
+          <meshPhysicalMaterial
+            color={genre.visualProfile.color}
+            emissive={genre.visualProfile.color}
+            emissiveIntensity={0.34}
+            transparent
+            opacity={0.18}
+            roughness={0.12}
+            metalness={0.18}
+            clearcoat={0.8}
+            depthWrite={false}
+          />
+        </mesh>
+      ) : null}
       <mesh
         ref={meshRef}
         onClick={(event) => {
@@ -57,6 +73,18 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
         <torusGeometry args={[0.34, 0.006, 8, 64]} />
         <meshBasicMaterial color={genre.visualProfile.accent} transparent opacity={active ? 0.65 : 0.24} />
       </mesh>
+      {active ? (
+        <>
+          <mesh rotation={[0.72, 0.18, 0.35]}>
+            <torusGeometry args={[0.47, 0.01, 10, 96]} />
+            <meshBasicMaterial color={genre.visualProfile.color} transparent opacity={0.42} />
+          </mesh>
+          <mesh rotation={[-0.38, 0.92, -0.16]}>
+            <torusGeometry args={[0.54, 0.006, 8, 96]} />
+            <meshBasicMaterial color={genre.visualProfile.accent} transparent opacity={0.34} />
+          </mesh>
+        </>
+      ) : null}
       <Text
         position={[0, -0.48, 0.02]}
         fontSize={active ? 0.12 : 0.095}
