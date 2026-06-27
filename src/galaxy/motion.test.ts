@@ -19,5 +19,13 @@ describe('motion helpers', () => {
     expect(active.scale.z).toBeCloseTo(active.scale.x);
     expect(active.radius).toBeGreaterThan(inactive.radius);
     expect(active.material.opacity).toBeGreaterThan(inactive.material.opacity);
+    expect(active.material.emissiveIntensity).toBeLessThan(inactive.material.emissiveIntensity);
+  });
+
+  it('keeps atom scale stable over time instead of applying a breathing pulse', () => {
+    const scale = atomShapeFor(true, 0.4);
+
+    expect(scale.animation.scalePulse).toBe(0);
+    expect(scale.animation.playingScaleBoost).toBe(0);
   });
 });

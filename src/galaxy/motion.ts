@@ -10,6 +10,11 @@ export interface AtomShape {
     roughness: number;
     metalness: number;
     clearcoat: number;
+    emissiveIntensity: number;
+  };
+  animation: {
+    scalePulse: number;
+    playingScaleBoost: number;
   };
 }
 
@@ -28,9 +33,14 @@ export function atomShapeFor(active: boolean, particleDensity: number): AtomShap
       scale: { x: 1.12, y: 1.12, z: 0.18 },
       material: {
         opacity: 0.84,
-        roughness: 0.34,
-        metalness: 0.16,
-        clearcoat: 0.12,
+        roughness: 0.42,
+        metalness: 0.08,
+        clearcoat: 0.08,
+        emissiveIntensity: 0.38,
+      },
+      animation: {
+        scalePulse: 0,
+        playingScaleBoost: 0,
       },
     };
   }
@@ -39,10 +49,15 @@ export function atomShapeFor(active: boolean, particleDensity: number): AtomShap
     radius: radius * 1.82,
     scale: { x: 1, y: 1, z: 1 },
     material: {
-      opacity: 0.96,
-      roughness: 0.08,
-      metalness: 0.28,
+      opacity: 1,
+      roughness: 0.18,
+      metalness: 0.12,
       clearcoat: 0.92,
+      emissiveIntensity: 0.08,
+    },
+    animation: {
+      scalePulse: 0,
+      playingScaleBoost: 0,
     },
   };
 }
@@ -62,6 +77,11 @@ export function mixAtomShape(from: AtomShape, to: AtomShape, amount: number): At
       roughness: lerp(from.material.roughness, to.material.roughness, t),
       metalness: lerp(from.material.metalness, to.material.metalness, t),
       clearcoat: lerp(from.material.clearcoat, to.material.clearcoat, t),
+      emissiveIntensity: lerp(from.material.emissiveIntensity, to.material.emissiveIntensity, t),
+    },
+    animation: {
+      scalePulse: lerp(from.animation.scalePulse, to.animation.scalePulse, t),
+      playingScaleBoost: lerp(from.animation.playingScaleBoost, to.animation.playingScaleBoost, t),
     },
   };
 }
