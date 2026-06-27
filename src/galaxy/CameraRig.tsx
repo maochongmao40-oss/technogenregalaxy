@@ -5,6 +5,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import type { Genre } from '../data/genreTypes';
 import { cameraTargetFor } from './geometry';
 import { graphPositionFor } from './graphLayout';
+import { softSpring } from './motion';
 
 interface CameraRigProps {
   selectedGenre: Genre | undefined;
@@ -16,7 +17,7 @@ export function CameraRig({ selectedGenre, controlsRef }: CameraRigProps) {
   const focus = useRef({
     active: false,
     elapsed: 0,
-    duration: 0.86,
+    duration: 1.18,
     fromCamera: new Vector3(),
     toCamera: new Vector3(),
     fromTarget: new Vector3(),
@@ -36,7 +37,7 @@ export function CameraRig({ selectedGenre, controlsRef }: CameraRigProps) {
     focus.current = {
       active: true,
       elapsed: 0,
-      duration: 0.86,
+      duration: selectedGenre ? 1.18 : 0.95,
       fromCamera: camera.position.clone(),
       toCamera: target.clone(),
       fromTarget: controls?.target.clone() ?? new Vector3(0, 0, 0),
@@ -50,7 +51,7 @@ export function CameraRig({ selectedGenre, controlsRef }: CameraRigProps) {
 
     transition.elapsed = Math.min(transition.duration, transition.elapsed + delta);
     const t = transition.elapsed / transition.duration;
-    const eased = iosSpring(t);
+    const eased = softSpring(t);
     camera.position.lerpVectors(transition.fromCamera, transition.toCamera, eased);
     const controls = controlsRef.current;
     if (controls) {
@@ -71,10 +72,4 @@ export function CameraRig({ selectedGenre, controlsRef }: CameraRigProps) {
   });
 
   return null;
-}
-
-function iosSpring(t: number): number {
-  if (t >= 1) return 1;
-  const eased = 1 - Math.exp(-6.6 * t) * Math.cos(8.2 * t);
-  return Math.min(1.08, Math.max(0, eased));
 }

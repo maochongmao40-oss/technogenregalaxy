@@ -1,9 +1,10 @@
 import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
-import type { Mesh } from 'three';
+import { MathUtils, type Mesh, type MeshPhysicalMaterial } from 'three';
 import type { Genre, GenreId } from '../data/genreTypes';
 import { graphPositionFor } from './graphLayout';
+import { atomShapeFor, mixAtomShape } from './motion';
 import { emissiveIntensity } from './visualProfiles';
 
 interface GenreMoleculeProps {
@@ -16,14 +17,41 @@ interface GenreMoleculeProps {
 
 export function GenreMolecule({ genre, active, playing, onHover, onSelect }: GenreMoleculeProps) {
   const meshRef = useRef<Mesh>(null);
+  const materialRef = useRef<MeshPhysicalMaterial>(null);
   const ringRef = useRef<Mesh>(null);
+  const shellRef = useRef<Mesh>(null);
+  const shapeProgress = useRef(0);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock }, delta) => {
     if (!meshRef.current) return;
+    shapeProgress.current = MathUtils.damp(shapeProgress.current, active ? 1 : 0, 4.8, delta);
     const pulse = Math.sin(clock.elapsedTime * genre.visualProfile.pulseSpeed * 2) * 0.06;
     const playingBoost = playing ? 0.18 : 0;
+    const shape = mixAtomShape(
+      atomShapeFor(false, genre.visualProfile.particleDensity),
+      atomShapeFor(true, genre.visualProfile.particleDensity),
+      shapeProgress.current,
+    );
     const scale = 1 + pulse + playingBoost;
-    meshRef.current.scale.setScalar(active ? scale * 1.16 : scale);
+    meshRef.current.scale.set(
+      shape.radius * shape.scale.x * scale,
+      shape.radius * shape.scale.y * scale,
+      shape.radius * shape.scale.z * scale,
+    );
+    meshRef.current.rotation.y += active ? 0.006 : 0.0016;
+    meshRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.35) * 0.08 * shapeProgress.current;
+    if (materialRef.current) {
+      materialRef.current.opacity = shape.material.opacity;
+      materialRef.current.roughness = shape.material.roughness;
+      materialRef.current.metalness = shape.material.metalness;
+      materialRef.current.clearcoat = shape.material.clearcoat;
+      materialRef.current.emissiveIntensity = emissiveIntensity(genre.visualProfile, active || playing);
+    }
+    if (shellRef.current) {
+      const shellScale = shapeProgress.current * (1 + pulse * 0.4);
+      shellRef.current.scale.setScalar(shellScale);
+      shellRef.current.visible = shellScale > 0.02;
+    }
     if (ringRef.current) {
       ringRef.current.rotation.z += 0.002 + genre.visualProfile.pulseSpeed * 0.0008;
       ringRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.22) * 0.18;
@@ -32,22 +60,20 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
 
   return (
     <group position={graphPositionFor(genre)}>
-      {active ? (
-        <mesh>
-          <sphereGeometry args={[0.42, 48, 48]} />
-          <meshPhysicalMaterial
-            color={genre.visualProfile.color}
-            emissive={genre.visualProfile.color}
-            emissiveIntensity={0.34}
-            transparent
-            opacity={0.18}
-            roughness={0.12}
-            metalness={0.18}
-            clearcoat={0.8}
-            depthWrite={false}
-          />
-        </mesh>
-      ) : null}
+      <mesh ref={shellRef} visible={false}>
+        <sphereGeometry args={[0.48, 48, 48]} />
+        <meshPhysicalMaterial
+          color={genre.visualProfile.color}
+          emissive={genre.visualProfile.color}
+          emissiveIntensity={0.28}
+          transparent
+          opacity={0.14}
+          roughness={0.05}
+          metalness={0.08}
+          clearcoat={1}
+          depthWrite={false}
+        />
+      </mesh>
       <mesh
         ref={meshRef}
         onClick={(event) => {
@@ -60,18 +86,18 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
         }}
         onPointerOut={() => onHover(null)}
       >
-        <sphereGeometry args={[0.18 + genre.visualProfile.particleDensity * 0.05, 32, 32]} />
-        <meshStandardMaterial
+        <sphereGeometry args={[1, 48, 48]} />
+        <meshPhysicalMaterial
+          ref={materialRef}
           color={genre.visualProfile.color}
           emissive={genre.visualProfile.color}
           emissiveIntensity={emissiveIntensity(genre.visualProfile, active || playing)}
-          roughness={0.28}
-          metalness={0.2}
+          transparent
+          opacity={0.84}
+          roughness={0.34}
+          metalness={0.16}
+          clearcoat={0.12}
         />
-      </mesh>
-      <mesh ref={ringRef}>
-        <torusGeometry args={[0.34, 0.006, 8, 64]} />
-        <meshBasicMaterial color={genre.visualProfile.accent} transparent opacity={active ? 0.65 : 0.24} />
       </mesh>
       {active ? (
         <>
@@ -83,7 +109,45 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
             <torusGeometry args={[0.54, 0.006, 8, 96]} />
             <meshBasicMaterial color={genre.visualProfile.accent} transparent opacity={0.34} />
           </mesh>
+          <mesh rotation={[0.2, -0.44, 0.92]}>
+            <torusGeometry args={[0.38, 0.004, 8, 96]} />
+            <meshBasicMaterial color="#ffffff" transparent opacity={0.18} />
+          </mesh>
         </>
+      ) : null}
+      <mesh ref={ringRef}>
+        <torusGeometry args={[0.34, 0.006, 8, 64]} />
+        <meshBasicMaterial color={genre.visualProfile.accent} transparent opacity={active ? 0.65 : 0.24} />
+      </mesh>
+      <mesh position={[-0.08, 0.08, 0.24]} visible={active}>
+        <sphereGeometry args={[0.065, 24, 24]} />
+        <meshPhysicalMaterial
+          color="#ffffff"
+          emissive="#ffffff"
+          emissiveIntensity={0.16}
+          transparent
+          opacity={0.72}
+          roughness={0.02}
+          metalness={0}
+          clearcoat={1}
+          depthWrite={false}
+        />
+      </mesh>
+      {!active ? (
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[0.18, 0.36, 64]} />
+          <meshPhysicalMaterial
+            color={genre.visualProfile.color}
+            emissive={genre.visualProfile.color}
+            emissiveIntensity={0.12}
+            transparent
+            opacity={0.14}
+            roughness={0.2}
+            metalness={0.12}
+            clearcoat={0.3}
+            depthWrite={false}
+          />
+        </mesh>
       ) : null}
       <Text
         position={[0, -0.48, 0.02]}

@@ -54,8 +54,8 @@ export function GenreGalaxy({ state, dispatch }: GenreGalaxyProps) {
         zoomSpeed={0.72}
         screenSpacePanning
         enableDamping
-        dampingFactor={0.12}
-        mouseButtons={{ LEFT: MOUSE.PAN, MIDDLE: MOUSE.DOLLY, RIGHT: MOUSE.ROTATE }}
+        dampingFactor={0.08}
+        mouseButtons={{ LEFT: MOUSE.ROTATE, MIDDLE: MOUSE.DOLLY, RIGHT: MOUSE.PAN }}
         touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_ROTATE }}
       />
     </Canvas>
