@@ -628,15 +628,6 @@ const canonicalTracksByGenre: Record<GenreId, CanonicalTrackSeed> = {
   },
 };
 
-const playbackOptions: Track['playbackOptions'] = [
-  { group: 'platform-embed', provider: 'spotify', label: 'Spotify embed', status: 'pending-url' },
-  { group: 'platform-embed', provider: 'apple-music', label: 'Apple Music embed', status: 'pending-url' },
-  { group: 'platform-embed', provider: 'soundcloud', label: 'SoundCloud embed', status: 'pending-url' },
-  { group: 'platform-embed', provider: 'youtube', label: 'YouTube embed', status: 'pending-url' },
-  { group: 'free-audio', provider: 'internet-archive', label: 'Internet Archive search', status: 'candidate' },
-  { group: 'free-audio', provider: 'jamendo', label: 'Jamendo search', status: 'candidate' },
-];
-
 export const tracks: Track[] = genres.flatMap((genre, index) => [
   canonicalTrackFor(genre.id),
   {
@@ -691,9 +682,72 @@ function canonicalTrackFor(genreId: GenreId): Track {
     sourceKind: 'curated-reference',
     playbackStatus: 'metadata-only',
     canonical: true,
-    playbackOptions,
+    playbackOptions: playbackOptionsFor(seed),
     note: seed.note,
   };
+}
+
+function playbackOptionsFor(seed: CanonicalTrackSeed): Track['playbackOptions'] {
+  const query = `${seed.artist} ${seed.title}`;
+  const encoded = encodeURIComponent(query);
+  const pathEncoded = encodeURIComponent(query).replace(/%20/g, '+');
+
+  return [
+    {
+      group: 'platform-embed',
+      provider: 'spotify',
+      label: 'Spotify embed',
+      status: 'confirmed-search-url',
+      authorization: 'platform-managed',
+      authorizationNote: 'Use the platform embed/player; do not download or self-host the recording.',
+      url: `https://open.spotify.com/search/${encodeURIComponent(query)}`,
+    },
+    {
+      group: 'platform-embed',
+      provider: 'apple-music',
+      label: 'Apple Music embed',
+      status: 'confirmed-search-url',
+      authorization: 'platform-managed',
+      authorizationNote: 'Use Apple Music linking or embed behavior; playback rights remain platform-managed.',
+      url: `https://music.apple.com/search?term=${encoded}`,
+    },
+    {
+      group: 'platform-embed',
+      provider: 'soundcloud',
+      label: 'SoundCloud embed',
+      status: 'confirmed-search-url',
+      authorization: 'platform-managed',
+      authorizationNote: 'Use the creator/platform embed when available; do not assume download rights.',
+      url: `https://soundcloud.com/search/sounds?q=${encoded}`,
+    },
+    {
+      group: 'platform-embed',
+      provider: 'youtube',
+      label: 'YouTube embed',
+      status: 'confirmed-search-url',
+      authorization: 'platform-managed',
+      authorizationNote: 'Use the YouTube embedded player and keep playback inside YouTube terms.',
+      url: `https://www.youtube.com/results?search_query=${encoded}`,
+    },
+    {
+      group: 'free-audio',
+      provider: 'internet-archive',
+      label: 'Internet Archive search',
+      status: 'confirmed-search-url',
+      authorization: 'needs-license-review',
+      authorizationNote: 'Only use an item after checking its rights metadata and file availability.',
+      url: `https://archive.org/search?query=${pathEncoded}`,
+    },
+    {
+      group: 'free-audio',
+      provider: 'jamendo',
+      label: 'Jamendo search',
+      status: 'confirmed-search-url',
+      authorization: 'needs-license-review',
+      authorizationNote: 'Only use tracks whose Jamendo license permits this playback context.',
+      url: `https://www.jamendo.com/search?qs=q=${encoded}`,
+    },
+  ];
 }
 
 export const relationships: Relationship[] = [

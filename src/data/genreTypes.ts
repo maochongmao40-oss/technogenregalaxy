@@ -49,7 +49,9 @@ export interface PlaybackOption {
   group: PlaybackOptionGroup;
   provider: PlaybackProvider;
   label: string;
-  status: 'candidate' | 'pending-url' | 'available';
+  status: 'candidate' | 'confirmed-search-url' | 'available';
+  authorization: 'platform-managed' | 'needs-license-review' | 'user-supplied-required';
+  authorizationNote: string;
   url?: string;
 }
 

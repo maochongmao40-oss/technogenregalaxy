@@ -52,6 +52,11 @@ describe('genre dataset', () => {
       expect(canonical[0].sourceKind).toBe('curated-reference');
       expect(canonical[0].playbackOptions?.some((option) => option.group === 'platform-embed')).toBe(true);
       expect(canonical[0].playbackOptions?.some((option) => option.group === 'free-audio')).toBe(true);
+      for (const option of canonical[0].playbackOptions ?? []) {
+        expect(option.url).toMatch(/^https:\/\//);
+        expect(['platform-managed', 'needs-license-review', 'user-supplied-required']).toContain(option.authorization);
+        expect(option.authorizationNote.length).toBeGreaterThan(12);
+      }
     }
   });
 

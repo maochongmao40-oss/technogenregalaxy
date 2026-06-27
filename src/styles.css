@@ -59,6 +59,111 @@ canvas {
   color: #38bdf8;
 }
 
+.all-tracks-toggle {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  min-height: 40px;
+  padding: 0 14px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f4f7fb;
+  background: rgba(3, 3, 7, 0.62);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+}
+
+.all-tracks-panel {
+  position: absolute;
+  top: 76px;
+  left: 50%;
+  width: min(820px, calc(100vw - 48px));
+  max-height: min(640px, calc(100vh - 132px));
+  padding: 16px;
+  transform: translateX(-50%);
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(3, 3, 7, 0.78);
+  backdrop-filter: blur(18px);
+}
+
+.all-tracks-panel header,
+.all-track-row,
+.all-track-options,
+.all-track-options div div {
+  display: flex;
+  gap: 10px;
+}
+
+.all-tracks-panel header {
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.all-tracks-panel h2 {
+  margin: 0;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.all-tracks-panel button,
+.all-track-options a {
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f4f7fb;
+  background: rgba(255, 255, 255, 0.06);
+  text-decoration: none;
+}
+
+.all-tracks-list {
+  display: grid;
+  gap: 8px;
+}
+
+.all-track-row {
+  align-items: start;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.all-track-row > div:first-child {
+  display: grid;
+  min-width: 180px;
+  flex: 1;
+  gap: 4px;
+}
+
+.all-track-row span,
+.all-track-options small {
+  color: rgba(244, 247, 251, 0.64);
+}
+
+.track-status {
+  min-width: 116px;
+  color: #c084fc;
+}
+
+.all-track-options {
+  flex: 1.4;
+  flex-wrap: wrap;
+}
+
+.all-track-options > div {
+  display: grid;
+  gap: 5px;
+}
+
+.all-track-options div div {
+  flex-wrap: wrap;
+}
+
+.all-track-options a {
+  display: grid;
+  gap: 2px;
+}
+
 .genre-panel {
   position: absolute;
   top: 88px;
@@ -187,6 +292,20 @@ canvas {
 
   .layer-controls button {
     flex: 1;
+  }
+
+  .all-tracks-toggle {
+    top: 64px;
+  }
+
+  .all-tracks-panel {
+    top: 116px;
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 180px);
+  }
+
+  .all-track-row {
+    display: grid;
   }
 
   .genre-panel {
