@@ -8,6 +8,7 @@ import type { GalaxyAction, GalaxyState } from '../state/galaxyState';
 import { CameraRig } from './CameraRig';
 import { GenreMolecule } from './GenreMolecule';
 import { RelationshipLayer } from './RelationshipLayer';
+import { TrackpadViewportControls } from './TrackpadViewportControls';
 
 interface GenreGalaxyProps {
   state: GalaxyState;
@@ -45,6 +46,7 @@ export function GenreGalaxy({ state, dispatch }: GenreGalaxyProps) {
         />
       ))}
       <CameraRig selectedGenre={selectedGenre} controlsRef={controlsRef} />
+      <TrackpadViewportControls controlsRef={controlsRef} />
       <OrbitControls
         ref={controlsRef}
         enablePan
@@ -58,7 +60,7 @@ export function GenreGalaxy({ state, dispatch }: GenreGalaxyProps) {
         enableDamping
         dampingFactor={0.08}
         mouseButtons={{ LEFT: MOUSE.ROTATE, MIDDLE: MOUSE.DOLLY, RIGHT: MOUSE.PAN }}
-        touches={{ ONE: TOUCH.PAN, TWO: TOUCH.DOLLY_ROTATE }}
+        touches={{ ONE: TOUCH.ROTATE, TWO: TOUCH.DOLLY_PAN }}
       />
     </Canvas>
   );
