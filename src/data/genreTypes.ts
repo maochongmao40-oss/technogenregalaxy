@@ -3,6 +3,8 @@ export type RelationshipViewType = 'all' | RelationshipLayerType;
 
 export type GenreId = string;
 export type TrackId = string;
+export type TrackPlaybackStatus = 'ready' | 'reserved';
+export type TrackSourceKind = 'placeholder' | 'local-file' | 'external-url';
 
 export type Vector3Tuple = [number, number, number];
 
@@ -28,6 +30,8 @@ export interface Track {
   duration: string;
   genreId: GenreId;
   audioSrc: string;
+  sourceKind: TrackSourceKind;
+  playbackStatus: TrackPlaybackStatus;
   note: string;
 }
 

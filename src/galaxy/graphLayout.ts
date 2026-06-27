@@ -25,6 +25,14 @@ const graphPositions: Record<string, Vector3Tuple> = {
   'berlin-school': [2.85, -3.05, 0.02],
   'uk-garage': [-2.85, -3.35, -0.03],
   breaks: [-2.25, -2.22, 0.03],
+  microhouse: [2.1, 0.12, 0.05],
+  rominimal: [2.65, 0.82, -0.03],
+  'hypnotic-techno': [1.55, -0.15, 0.02],
+  'peak-time-techno': [0.05, 3.05, 0.04],
+  hardgroove: [-0.72, 1.72, -0.02],
+  'birmingham-techno': [2.55, 2.28, 0.03],
+  ghettotech: [-2.1, 0.72, -0.04],
+  'future-garage': [-3.45, -3.95, 0.02],
 };
 
 export function graphPositionFor(genre: Genre): Vector3Tuple {

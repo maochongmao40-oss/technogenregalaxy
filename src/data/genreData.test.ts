@@ -15,9 +15,27 @@ describe('genre dataset', () => {
   });
 
   it('contains the first-version genre set', () => {
-    expect(genres).toHaveLength(24);
+    expect(genres).toHaveLength(32);
     expect(getGenreById('detroit-techno')?.name).toBe('Detroit Techno');
     expect(getGenreById('uk-garage')?.name).toBe('UK Garage');
+  });
+
+  it('adds deeper subgenre nodes with graph relationships', () => {
+    const subgenreIds = [
+      'microhouse',
+      'rominimal',
+      'hypnotic-techno',
+      'peak-time-techno',
+      'hardgroove',
+      'birmingham-techno',
+      'ghettotech',
+      'future-garage',
+    ];
+
+    for (const genreId of subgenreIds) {
+      expect(getGenreById(genreId)).toBeDefined();
+      expect(getRelationshipsForGenre(genreId).length).toBeGreaterThanOrEqual(2);
+    }
   });
 
   it('has at least two tracks per genre', () => {
@@ -59,7 +77,20 @@ describe('genre dataset', () => {
     }
     for (const track of tracks) {
       expect(genreIds.has(track.genreId)).toBe(true);
-      expect(track.audioSrc).toMatch(/^\/audio\/placeholder-/);
+      expect(['placeholder', 'local-file', 'external-url']).toContain(track.sourceKind);
+      expect(['ready', 'reserved']).toContain(track.playbackStatus);
+      if (track.playbackStatus === 'ready') {
+        expect(track.audioSrc).toMatch(/^\/audio\/placeholder-/);
+      }
+    }
+  });
+
+  it('reserves a future audio slot for each genre', () => {
+    for (const genre of genres) {
+      const reserved = getTracksForGenre(genre.id).filter((track) => track.playbackStatus === 'reserved');
+      expect(reserved).toHaveLength(1);
+      expect(reserved[0].sourceKind).toBe('local-file');
+      expect(reserved[0].audioSrc).toBe(`/audio/future/${genre.id}.mp3`);
     }
   });
 

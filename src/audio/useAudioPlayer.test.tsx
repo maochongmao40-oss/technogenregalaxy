@@ -11,7 +11,17 @@ const demoTrack: Track = {
   duration: '0:30',
   genreId: 'detroit-techno',
   audioSrc: '/audio/placeholder-1.mp3',
+  sourceKind: 'placeholder',
+  playbackStatus: 'ready',
   note: 'Test track',
+};
+
+const reservedTrack: Track = {
+  ...demoTrack,
+  id: 'reserved-demo',
+  audioSrc: '/audio/future/detroit-techno.mp3',
+  sourceKind: 'local-file',
+  playbackStatus: 'reserved',
 };
 
 describe('useAudioPlayer', () => {
@@ -42,5 +52,11 @@ describe('useAudioPlayer', () => {
   it('creates a playable state for a track after user-driven playback state is true', () => {
     const { result } = renderHook(() => useAudioPlayer(demoTrack, true));
     expect(result.current.canPlay).toBe(true);
+  });
+
+  it('keeps reserved future audio slots unavailable until a real file is added', () => {
+    const { result } = renderHook(() => useAudioPlayer(reservedTrack, true));
+    expect(result.current.canPlay).toBe(false);
+    expect(result.current.error).toBe('Audio slot reserved');
   });
 });

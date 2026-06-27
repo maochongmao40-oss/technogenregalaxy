@@ -12,6 +12,7 @@ describe('GenrePanel', () => {
     expect(screen.getByRole('heading', { name: 'Detroit Techno' })).toBeInTheDocument();
     await userEvent.click(screen.getAllByRole('button', { name: /play/i })[0]);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'startTrack' }));
+    expect(screen.getByRole('button', { name: /reserved/i })).toBeDisabled();
 
     await userEvent.click(screen.getAllByRole('button', { name: /jump to/i })[0]);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'selectGenre' }));

@@ -38,19 +38,25 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
       <section>
         <h2>Signals</h2>
         <div className="track-list">
-          {tracks.map((track) => (
-            <button
-              key={track.id}
-              type="button"
-              className="track-button"
-              onClick={() => dispatch({ type: 'startTrack', trackId: track.id })}
-            >
-              <span>Play {track.title}</span>
-              <small>
-                {track.artist} / {track.year}
-              </small>
-            </button>
-          ))}
+          {tracks.map((track) => {
+            const reserved = track.playbackStatus === 'reserved';
+            return (
+              <button
+                key={track.id}
+                type="button"
+                className="track-button"
+                disabled={reserved}
+                onClick={() => {
+                  if (!reserved) dispatch({ type: 'startTrack', trackId: track.id });
+                }}
+              >
+                <span>{reserved ? 'Reserved ' : 'Play '}{track.title}</span>
+                <small>
+                  {track.artist} / {track.duration} / {track.sourceKind}
+                </small>
+              </button>
+            );
+          })}
         </div>
       </section>
       <section>

@@ -25,6 +25,13 @@ export function useAudioPlayer(track: Track | null, isPlaying: boolean): AudioPl
       return;
     }
 
+    if (track.playbackStatus === 'reserved') {
+      audioRef.current?.pause();
+      audioRef.current = null;
+      setState({ canPlay: false, error: 'Audio slot reserved', progress: 0, duration: 0 });
+      return;
+    }
+
     const audio = new Audio(track.audioSrc);
     audioRef.current = audio;
     setState({ canPlay: true, error: null, progress: 0, duration: 0 });
