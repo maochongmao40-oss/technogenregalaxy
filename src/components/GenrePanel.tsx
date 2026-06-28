@@ -43,25 +43,34 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
             const reserved = track.playbackStatus === 'reserved';
             const platformOptions = track.playbackOptions?.filter((option) => option.group === 'platform-embed') ?? [];
             return (
-              <button
-                key={track.id}
-                type="button"
-                className={`track-button${track.canonical ? ' is-canonical' : ''}`}
-                disabled={!playable}
-                onClick={() => {
-                  if (playable) dispatch({ type: 'startTrack', trackId: track.id });
-                }}
-              >
-                <span>{track.canonical ? 'Classic ' : reserved ? 'Reserved ' : 'Play '}{track.title}</span>
-                <small>
-                  {track.artist} / {track.duration} / {track.sourceKind}
-                </small>
-                {track.canonical ? (
-                  <span className="playback-options">
-                    <span>Embed: {platformOptions.map((option) => option.label.replace(' embed', '')).join(', ')}</span>
+              <article key={track.id} className={`track-card${track.canonical ? ' is-canonical' : ''}`}>
+                <button
+                  type="button"
+                  className="track-button"
+                  disabled={!playable}
+                  onClick={() => {
+                    if (playable) dispatch({ type: 'startTrack', trackId: track.id });
+                  }}
+                >
+                  <span>
+                    {track.canonical ? 'Classic ' : reserved ? 'Reserved ' : 'Play '}
+                    {track.title}
                   </span>
+                  <small>
+                    {track.artist} / {track.duration} / {track.sourceKind}
+                  </small>
+                </button>
+                {platformOptions.length > 0 ? (
+                  <div className="playback-options" aria-label={`${track.title} platform links`}>
+                    {platformOptions.map((option) => (
+                      <a key={option.provider} href={option.url} target="_blank" rel="noreferrer">
+                        {option.label.replace(' embed', '')}
+                        <small>platform</small>
+                      </a>
+                    ))}
+                  </div>
                 ) : null}
-              </button>
+              </article>
             );
           })}
         </div>
