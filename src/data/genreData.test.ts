@@ -44,19 +44,24 @@ describe('genre dataset', () => {
     }
   });
 
-  it('provides a canonical real-track candidate with platform and free-audio playback options for each genre', () => {
+  it('provides Spotify and YouTube platform playback links for every track', () => {
+    for (const track of tracks) {
+      expect(track.playbackOptions?.map((option) => option.provider)).toEqual(['spotify', 'youtube']);
+      for (const option of track.playbackOptions ?? []) {
+        expect(option.group).toBe('platform-embed');
+        expect(option.url).toMatch(/^https:\/\//);
+        expect(option.authorization).toBe('platform-managed');
+        expect(option.authorizationNote.length).toBeGreaterThan(12);
+      }
+    }
+  });
+
+  it('provides a canonical real-track candidate for each genre', () => {
     for (const genre of genres) {
       const canonical = getTracksForGenre(genre.id).filter((track) => track.canonical);
       expect(canonical).toHaveLength(1);
       expect(canonical[0].playbackStatus).toBe('metadata-only');
       expect(canonical[0].sourceKind).toBe('curated-reference');
-      expect(canonical[0].playbackOptions?.some((option) => option.group === 'platform-embed')).toBe(true);
-      expect(canonical[0].playbackOptions?.some((option) => option.group === 'free-audio')).toBe(true);
-      for (const option of canonical[0].playbackOptions ?? []) {
-        expect(option.url).toMatch(/^https:\/\//);
-        expect(['platform-managed', 'needs-license-review', 'user-supplied-required']).toContain(option.authorization);
-        expect(option.authorizationNote.length).toBeGreaterThan(12);
-      }
     }
   });
 

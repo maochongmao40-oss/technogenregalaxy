@@ -5,14 +5,8 @@ export type GenreId = string;
 export type TrackId = string;
 export type TrackPlaybackStatus = 'ready' | 'reserved' | 'metadata-only';
 export type TrackSourceKind = 'placeholder' | 'local-file' | 'external-url' | 'curated-reference';
-export type PlaybackOptionGroup = 'platform-embed' | 'free-audio';
-export type PlaybackProvider =
-  | 'spotify'
-  | 'apple-music'
-  | 'soundcloud'
-  | 'youtube'
-  | 'internet-archive'
-  | 'jamendo';
+export type PlaybackOptionGroup = 'platform-embed';
+export type PlaybackProvider = 'spotify' | 'youtube';
 
 export type Vector3Tuple = [number, number, number];
 
@@ -50,7 +44,7 @@ export interface PlaybackOption {
   provider: PlaybackProvider;
   label: string;
   status: 'candidate' | 'confirmed-search-url' | 'available';
-  authorization: 'platform-managed' | 'needs-license-review' | 'user-supplied-required';
+  authorization: 'platform-managed';
   authorizationNote: string;
   url?: string;
 }

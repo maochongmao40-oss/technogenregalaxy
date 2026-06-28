@@ -16,7 +16,16 @@ export default function App() {
     <main className="app-shell">
       <GenreGalaxy state={state} dispatch={dispatch} />
       <LayerControls activeLayer={state.activeLayer} onChange={(layer) => dispatch({ type: 'selectLayer', layer })} />
-      <AllTracksPanel open={tracksOpen} onToggle={() => setTracksOpen((open) => !open)} dispatch={dispatch} />
+      <AllTracksPanel
+        open={tracksOpen}
+        onToggle={() => {
+          setTracksOpen((open) => {
+            if (!open) dispatch({ type: 'clearSelectedGenre' });
+            return !open;
+          });
+        }}
+        dispatch={dispatch}
+      />
       <GenrePanel genre={selectedGenre} dispatch={dispatch} />
       <AudioPlayer state={state} dispatch={dispatch} />
     </main>

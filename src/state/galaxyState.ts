@@ -10,6 +10,7 @@ export interface GalaxyState {
 
 export type GalaxyAction =
   | { type: 'selectGenre'; genreId: GenreId }
+  | { type: 'clearSelectedGenre' }
   | { type: 'hoverGenre'; genreId: GenreId | null }
   | { type: 'selectLayer'; layer: RelationshipViewType }
   | { type: 'startTrack'; trackId: TrackId }
@@ -25,6 +26,10 @@ export const initialGalaxyState: GalaxyState = {
 
 export function selectGenre(state: GalaxyState, genreId: GenreId): GalaxyState {
   return { ...state, selectedGenreId: genreId };
+}
+
+export function clearSelectedGenre(state: GalaxyState): GalaxyState {
+  return { ...state, selectedGenreId: null };
 }
 
 export function selectLayer(state: GalaxyState, layer: RelationshipViewType): GalaxyState {
@@ -43,6 +48,8 @@ export function galaxyReducer(state: GalaxyState, action: GalaxyAction): GalaxyS
   switch (action.type) {
     case 'selectGenre':
       return selectGenre(state, action.genreId);
+    case 'clearSelectedGenre':
+      return clearSelectedGenre(state);
     case 'hoverGenre':
       return { ...state, hoveredGenreId: action.genreId };
     case 'selectLayer':

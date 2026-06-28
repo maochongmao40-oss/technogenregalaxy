@@ -27,7 +27,6 @@ export function AllTracksPanel({ open, onToggle, dispatch }: AllTracksPanelProps
               const genre = getGenreById(track.genreId);
               const playable = track.playbackStatus === 'ready';
               const platformOptions = track.playbackOptions?.filter((option) => option.group === 'platform-embed') ?? [];
-              const freeOptions = track.playbackOptions?.filter((option) => option.group === 'free-audio') ?? [];
 
               return (
                 <article key={track.id} className="all-track-row">
@@ -43,10 +42,9 @@ export function AllTracksPanel({ open, onToggle, dispatch }: AllTracksPanelProps
                       Play
                     </button>
                   ) : null}
-                  {track.canonical ? (
+                  {platformOptions.length > 0 ? (
                     <div className="all-track-options">
                       <LinkGroup label="Embed" options={platformOptions} />
-                      <LinkGroup label="Free audio" options={freeOptions} />
                     </div>
                   ) : null}
                 </article>
@@ -82,7 +80,5 @@ function statusLabel(status: (typeof tracks)[number]['playbackStatus']): string 
 }
 
 function authorizationLabel(authorization: NonNullable<(typeof tracks)[number]['playbackOptions']>[number]['authorization']): string {
-  if (authorization === 'platform-managed') return 'platform';
-  if (authorization === 'needs-license-review') return 'license review';
-  return 'user supplied';
+  return authorization === 'platform-managed' ? 'platform' : authorization;
 }

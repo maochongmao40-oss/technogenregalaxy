@@ -16,10 +16,11 @@ describe('AllTracksPanel', () => {
       'href',
       expect.stringContaining('spotify'),
     );
-    expect(screen.getAllByRole('link', { name: /internet archive license review/i })[0]).toHaveAttribute(
+    expect(screen.getAllByRole('link', { name: /youtube platform/i })[0]).toHaveAttribute(
       'href',
-      expect.stringContaining('archive.org'),
+      expect.stringContaining('youtube'),
     );
+    expect(screen.queryByRole('link', { name: /internet archive/i })).not.toBeInTheDocument();
 
     await userEvent.click(screen.getAllByRole('button', { name: 'Play' })[0]);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'startTrack' }));

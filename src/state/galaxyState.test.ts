@@ -6,6 +6,7 @@ import {
   selectLayer,
   startTrack,
   stopTrack,
+  clearSelectedGenre,
 } from './galaxyState';
 
 describe('galaxy state', () => {
@@ -19,6 +20,10 @@ describe('galaxy state', () => {
 
   it('switches relationship layer', () => {
     expect(selectLayer(initialGalaxyState, 'scene').activeLayer).toBe('scene');
+  });
+
+  it('clears the selected genre', () => {
+    expect(clearSelectedGenre(initialGalaxyState).selectedGenreId).toBeNull();
   });
 
   it('defaults to showing all relationship layers', () => {
@@ -35,5 +40,6 @@ describe('galaxy state', () => {
   it('handles reducer actions', () => {
     const state = galaxyReducer(initialGalaxyState, { type: 'selectGenre', genreId: 'acid-techno' });
     expect(state.selectedGenreId).toBe('acid-techno');
+    expect(galaxyReducer(state, { type: 'clearSelectedGenre' }).selectedGenreId).toBeNull();
   });
 });

@@ -628,45 +628,47 @@ const canonicalTracksByGenre: Record<GenreId, CanonicalTrackSeed> = {
   },
 };
 
-export const tracks: Track[] = genres.flatMap((genre, index) => [
-  canonicalTrackFor(genre.id),
-  {
-    id: `${genre.id}-pulse-a`,
-    title: `${genre.name} Signal A`,
-    artist: 'Prototype Archive',
-    year: 1990 + (index % 25),
-    duration: '0:30',
-    genreId: genre.id,
-    audioSrc: `/audio/placeholder-${(index % 3) + 1}.mp3`,
-    sourceKind: 'placeholder',
-    playbackStatus: 'ready',
-    note: `Placeholder loop for testing the ${genre.name} playback state.`,
-  },
-  {
-    id: `${genre.id}-pulse-b`,
-    title: `${genre.name} Signal B`,
-    artist: 'Prototype Archive',
-    year: 1992 + (index % 25),
-    duration: '0:30',
-    genreId: genre.id,
-    audioSrc: `/audio/placeholder-${((index + 1) % 3) + 1}.mp3`,
-    sourceKind: 'placeholder',
-    playbackStatus: 'ready',
-    note: `Second placeholder loop for testing ${genre.name} track switching.`,
-  },
-  {
-    id: `${genre.id}-reference-slot`,
-    title: `${genre.name} Reference Slot`,
-    artist: 'Reserved Audio Source',
-    year: 2026,
-    duration: 'TBD',
-    genreId: genre.id,
-    audioSrc: `/audio/future/${genre.id}.mp3`,
-    sourceKind: 'local-file',
-    playbackStatus: 'reserved',
-    note: `Reserved slot for a licensed or locally supplied ${genre.name} reference track.`,
-  },
-]);
+export const tracks: Track[] = genres
+  .flatMap((genre, index) => [
+    canonicalTrackFor(genre.id),
+    {
+      id: `${genre.id}-pulse-a`,
+      title: `${genre.name} Signal A`,
+      artist: 'Prototype Archive',
+      year: 1990 + (index % 25),
+      duration: '0:30',
+      genreId: genre.id,
+      audioSrc: `/audio/placeholder-${(index % 3) + 1}.mp3`,
+      sourceKind: 'placeholder' as const,
+      playbackStatus: 'ready' as const,
+      note: `Placeholder loop for testing the ${genre.name} playback state.`,
+    },
+    {
+      id: `${genre.id}-pulse-b`,
+      title: `${genre.name} Signal B`,
+      artist: 'Prototype Archive',
+      year: 1992 + (index % 25),
+      duration: '0:30',
+      genreId: genre.id,
+      audioSrc: `/audio/placeholder-${((index + 1) % 3) + 1}.mp3`,
+      sourceKind: 'placeholder' as const,
+      playbackStatus: 'ready' as const,
+      note: `Second placeholder loop for testing ${genre.name} track switching.`,
+    },
+    {
+      id: `${genre.id}-reference-slot`,
+      title: `${genre.name} Reference Slot`,
+      artist: 'Reserved Audio Source',
+      year: 2026,
+      duration: 'TBD',
+      genreId: genre.id,
+      audioSrc: `/audio/future/${genre.id}.mp3`,
+      sourceKind: 'local-file' as const,
+      playbackStatus: 'reserved' as const,
+      note: `Reserved slot for a licensed or locally supplied ${genre.name} reference track.`,
+    },
+  ])
+  .map((track) => ({ ...track, playbackOptions: playbackOptionsFor(track) }));
 
 function canonicalTrackFor(genreId: GenreId): Track {
   const seed = canonicalTracksByGenre[genreId];
@@ -682,15 +684,13 @@ function canonicalTrackFor(genreId: GenreId): Track {
     sourceKind: 'curated-reference',
     playbackStatus: 'metadata-only',
     canonical: true,
-    playbackOptions: playbackOptionsFor(seed),
     note: seed.note,
   };
 }
 
-function playbackOptionsFor(seed: CanonicalTrackSeed): Track['playbackOptions'] {
+function playbackOptionsFor(seed: Pick<Track, 'artist' | 'title'>): Track['playbackOptions'] {
   const query = `${seed.artist} ${seed.title}`;
   const encoded = encodeURIComponent(query);
-  const pathEncoded = encodeURIComponent(query).replace(/%20/g, '+');
 
   return [
     {
@@ -704,48 +704,12 @@ function playbackOptionsFor(seed: CanonicalTrackSeed): Track['playbackOptions'] 
     },
     {
       group: 'platform-embed',
-      provider: 'apple-music',
-      label: 'Apple Music embed',
-      status: 'confirmed-search-url',
-      authorization: 'platform-managed',
-      authorizationNote: 'Use Apple Music linking or embed behavior; playback rights remain platform-managed.',
-      url: `https://music.apple.com/search?term=${encoded}`,
-    },
-    {
-      group: 'platform-embed',
-      provider: 'soundcloud',
-      label: 'SoundCloud embed',
-      status: 'confirmed-search-url',
-      authorization: 'platform-managed',
-      authorizationNote: 'Use the creator/platform embed when available; do not assume download rights.',
-      url: `https://soundcloud.com/search/sounds?q=${encoded}`,
-    },
-    {
-      group: 'platform-embed',
       provider: 'youtube',
       label: 'YouTube embed',
       status: 'confirmed-search-url',
       authorization: 'platform-managed',
       authorizationNote: 'Use the YouTube embedded player and keep playback inside YouTube terms.',
       url: `https://www.youtube.com/results?search_query=${encoded}`,
-    },
-    {
-      group: 'free-audio',
-      provider: 'internet-archive',
-      label: 'Internet Archive search',
-      status: 'confirmed-search-url',
-      authorization: 'needs-license-review',
-      authorizationNote: 'Only use an item after checking its rights metadata and file availability.',
-      url: `https://archive.org/search?query=${pathEncoded}`,
-    },
-    {
-      group: 'free-audio',
-      provider: 'jamendo',
-      label: 'Jamendo search',
-      status: 'confirmed-search-url',
-      authorization: 'needs-license-review',
-      authorizationNote: 'Only use tracks whose Jamendo license permits this playback context.',
-      url: `https://www.jamendo.com/search?qs=q=${encoded}`,
     },
   ];
 }

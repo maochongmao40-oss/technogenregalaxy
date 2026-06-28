@@ -42,7 +42,6 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
             const playable = track.playbackStatus === 'ready';
             const reserved = track.playbackStatus === 'reserved';
             const platformOptions = track.playbackOptions?.filter((option) => option.group === 'platform-embed') ?? [];
-            const freeOptions = track.playbackOptions?.filter((option) => option.group === 'free-audio') ?? [];
             return (
               <button
                 key={track.id}
@@ -60,7 +59,6 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
                 {track.canonical ? (
                   <span className="playback-options">
                     <span>Embed: {platformOptions.map((option) => option.label.replace(' embed', '')).join(', ')}</span>
-                    <span>Free audio: {freeOptions.map((option) => option.label.replace(' search', '')).join(', ')}</span>
                   </span>
                 ) : null}
               </button>
