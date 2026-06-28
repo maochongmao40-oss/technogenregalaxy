@@ -44,13 +44,13 @@ canvas {
 .mode-controls {
   top: 24px;
   left: 24px;
-  z-index: 4;
+  z-index: 8;
 }
 
 .layer-controls {
   top: 76px;
   left: 24px;
-  z-index: 3;
+  z-index: 7;
 }
 
 .mode-controls button,
@@ -84,7 +84,7 @@ canvas {
   background: rgba(3, 3, 7, 0.62);
   backdrop-filter: blur(14px);
   cursor: pointer;
-  z-index: 4;
+  z-index: 8;
 }
 
 .all-tracks-panel {
@@ -99,6 +99,7 @@ canvas {
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(3, 3, 7, 0.78);
   backdrop-filter: blur(18px);
+  z-index: 9;
 }
 
 .all-tracks-panel header,
@@ -192,6 +193,7 @@ canvas {
   overflow-wrap: anywhere;
   transition: box-shadow 240ms ease, border-color 240ms ease;
   will-change: transform;
+  z-index: 9;
 }
 
 .panel-drag-handle {
@@ -276,6 +278,7 @@ canvas {
 .scene-node-label {
   pointer-events: none;
   transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 .scene-node-label span {

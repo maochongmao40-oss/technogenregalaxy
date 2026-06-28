@@ -46,7 +46,7 @@ export function SceneNodeObject({ node, active, onHover, onSelect }: SceneNodeOb
           opacity={active ? 1 : 0.86}
         />
       </mesh>
-      <Html position={[0, -1, 0.04]} center className={`scene-node-label${active ? ' is-active' : ''}`}>
+      <Html position={[0, -1, 0.04]} center zIndexRange={[1, 0]} className={`scene-node-label${active ? ' is-active' : ''}`}>
         <span>{node.name}</span>
       </Html>
     </group>

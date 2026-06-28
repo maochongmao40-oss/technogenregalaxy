@@ -1,10 +1,9 @@
-import { Text } from '@react-three/drei';
+import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
-import { MathUtils, type Mesh, type MeshPhysicalMaterial } from 'three';
+import { MathUtils, type Mesh } from 'three';
 import type { Genre, GenreId } from '../data/genreTypes';
 import { graphPositionFor } from './graphLayout';
-import { atomShapeFor, mixAtomShape } from './motion';
 
 interface GenreMoleculeProps {
   genre: Genre;
@@ -16,32 +15,15 @@ interface GenreMoleculeProps {
 
 export function GenreMolecule({ genre, active, playing, onHover, onSelect }: GenreMoleculeProps) {
   const meshRef = useRef<Mesh>(null);
-  const materialRef = useRef<MeshPhysicalMaterial>(null);
-  const shapeProgress = useRef(0);
 
   useFrame((_, delta) => {
     if (!meshRef.current) return;
-    shapeProgress.current = MathUtils.damp(shapeProgress.current, active ? 1 : 0, 4.8, delta);
-    const shape = mixAtomShape(
-      atomShapeFor(false, genre.visualProfile.particleDensity),
-      atomShapeFor(true, genre.visualProfile.particleDensity),
-      shapeProgress.current,
-    );
-    meshRef.current.scale.set(
-      shape.radius * shape.scale.x,
-      shape.radius * shape.scale.y,
-      shape.radius * shape.scale.z,
-    );
-    meshRef.current.rotation.y += active ? 0.006 : 0.0016;
-    if (materialRef.current) {
-      materialRef.current.opacity = shape.material.opacity;
-      materialRef.current.roughness = shape.material.roughness;
-      materialRef.current.metalness = shape.material.metalness;
-      materialRef.current.clearcoat = shape.material.clearcoat;
-      materialRef.current.emissiveIntensity = playing
-        ? shape.material.emissiveIntensity + 0.1
-        : shape.material.emissiveIntensity;
-    }
+    const baseScale = 0.48 + genre.visualProfile.particleDensity * 0.1;
+    const targetScale = active ? baseScale * 1.18 : playing ? baseScale * 1.08 : baseScale;
+    const scale = MathUtils.damp(meshRef.current.scale.x, targetScale, 5, delta);
+    meshRef.current.scale.setScalar(scale);
+    meshRef.current.rotation.y += active ? 0.006 : 0.002;
+    meshRef.current.rotation.x += genre.visualProfile.motion === 'sharp' ? 0.002 : 0.0008;
   });
 
   return (
@@ -60,31 +42,21 @@ export function GenreMolecule({ genre, active, playing, onHover, onSelect }: Gen
         }}
         onPointerOut={() => onHover(null)}
       >
-        <sphereGeometry args={[1, 48, 48]} />
-        <meshPhysicalMaterial
-          ref={materialRef}
+        {genre.category === 'industrial' ? <octahedronGeometry args={[0.58, 1]} /> : <sphereGeometry args={[0.52, 40, 40]} />}
+        <meshBasicMaterial
           color={genre.visualProfile.color}
-          emissive={genre.visualProfile.color}
-          emissiveIntensity={atomShapeFor(false, genre.visualProfile.particleDensity).material.emissiveIntensity}
-          opacity={1}
-          roughness={0.36}
-          metalness={0.08}
-          clearcoat={0.18}
-          reflectivity={0.6}
+          transparent
+          opacity={active ? 1 : 0.88}
         />
       </mesh>
-      <Text
-        position={[0, -0.48, 0.02]}
-        fontSize={active ? 0.12 : 0.095}
-        maxWidth={0.95}
-        anchorX="center"
-        anchorY="middle"
-        color={active ? '#ffffff' : 'rgba(244,247,251,0.72)'}
-        outlineWidth={0.005}
-        outlineColor="#030307"
+      <Html
+        position={[0, -0.86, 0.04]}
+        center
+        zIndexRange={[1, 0]}
+        className={`scene-node-label genre-node-label${active ? ' is-active' : ''}`}
       >
-        {genre.name}
-      </Text>
+        <span>{genre.name}</span>
+      </Html>
     </group>
   );
 }
