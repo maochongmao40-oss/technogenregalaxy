@@ -1,7 +1,8 @@
-import { useRef, useState, type Dispatch, type PointerEvent } from 'react';
+import type { Dispatch } from 'react';
 import { getGenreById, getRelationshipsForGenre, getTracksForGenre } from '../data/genreData';
 import type { Genre } from '../data/genreTypes';
 import type { GalaxyAction } from '../state/galaxyState';
+import { useDraggablePanel } from './useDraggablePanel';
 
 interface GenrePanelProps {
   genre: Genre | undefined;
@@ -9,8 +10,7 @@ interface GenrePanelProps {
 }
 
 export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const dragRef = useRef({ dragging: false, startX: 0, startY: 0, originX: 0, originY: 0 });
+  const { panelStyle, startDrag } = useDraggablePanel();
 
   if (!genre) return null;
 
@@ -21,7 +21,7 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
     <aside
       className="genre-panel"
       aria-label={`${genre.name} details`}
-      style={{ transform: `translate3d(${offset.x}px, ${offset.y}px, 0)` }}
+      style={panelStyle}
     >
       <div className="panel-drag-handle" onPointerDown={startDrag}>
         <p className="panel-kicker">
@@ -63,7 +63,13 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
                 {platformOptions.length > 0 ? (
                   <div className="playback-options" aria-label={`${track.title} platform links`}>
                     {platformOptions.map((option) => (
-                      <a key={option.provider} href={option.url} target="_blank" rel="noreferrer">
+                      <a
+                        key={option.provider}
+                        className={`provider-link provider-link--${option.provider}`}
+                        href={option.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         {option.label.replace(' embed', '')}
                         <small>platform</small>
                       </a>
@@ -97,32 +103,4 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
     </aside>
   );
 
-  function startDrag(event: PointerEvent<HTMLDivElement>) {
-    dragRef.current = {
-      dragging: true,
-      startX: event.clientX,
-      startY: event.clientY,
-      originX: offset.x,
-      originY: offset.y,
-    };
-    event.currentTarget.setPointerCapture(event.pointerId);
-    const move = (moveEvent: globalThis.PointerEvent) => {
-      if (!dragRef.current.dragging) return;
-      setOffset({
-        x: clamp(dragRef.current.originX + moveEvent.clientX - dragRef.current.startX, -window.innerWidth + 120, window.innerWidth - 120),
-        y: clamp(dragRef.current.originY + moveEvent.clientY - dragRef.current.startY, -window.innerHeight + 120, window.innerHeight - 120),
-      });
-    };
-    const end = () => {
-      dragRef.current.dragging = false;
-      window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerup', end);
-    };
-    window.addEventListener('pointermove', move);
-    window.addEventListener('pointerup', end);
-  }
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value));
 }

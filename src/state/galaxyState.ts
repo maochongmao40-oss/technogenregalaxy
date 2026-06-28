@@ -18,6 +18,7 @@ export type GalaxyAction =
   | { type: 'selectViewMode'; viewMode: GalaxyViewMode }
   | { type: 'selectGenre'; genreId: GenreId }
   | { type: 'clearSelectedGenre' }
+  | { type: 'clearSelectedSceneNode' }
   | { type: 'hoverGenre'; genreId: GenreId | null }
   | { type: 'selectSceneNode'; nodeId: SceneNodeId }
   | { type: 'hoverSceneNode'; nodeId: SceneNodeId | null }
@@ -42,6 +43,10 @@ export function selectGenre(state: GalaxyState, genreId: GenreId): GalaxyState {
 
 export function clearSelectedGenre(state: GalaxyState): GalaxyState {
   return { ...state, selectedGenreId: null };
+}
+
+export function clearSelectedSceneNode(state: GalaxyState): GalaxyState {
+  return { ...state, selectedSceneNodeId: null };
 }
 
 export function selectSceneMode(state: GalaxyState, viewMode: GalaxyViewMode): GalaxyState {
@@ -92,6 +97,8 @@ export function galaxyReducer(state: GalaxyState, action: GalaxyAction): GalaxyS
       return selectGenre(state, action.genreId);
     case 'clearSelectedGenre':
       return clearSelectedGenre(state);
+    case 'clearSelectedSceneNode':
+      return clearSelectedSceneNode(state);
     case 'hoverGenre':
       return { ...state, hoveredGenreId: action.genreId };
     case 'selectSceneNode':

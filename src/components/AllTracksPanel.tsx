@@ -63,7 +63,13 @@ function LinkGroup({ label, options }: { label: string; options: NonNullable<(ty
       <span>{label}</span>
       <div>
         {options.map((option) => (
-          <a key={option.provider} href={option.url} target="_blank" rel="noreferrer">
+          <a
+            key={option.provider}
+            className={`provider-link provider-link--${option.provider}`}
+            href={option.url}
+            target="_blank"
+            rel="noreferrer"
+          >
             {option.label.replace(' embed', '').replace(' search', '')}
             <small>{authorizationLabel(option.authorization)}</small>
           </a>

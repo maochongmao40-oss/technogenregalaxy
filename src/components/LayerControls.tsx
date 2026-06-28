@@ -9,6 +9,7 @@ interface LayerControlsProps {
 export function LayerControls({ activeLayer, onChange }: LayerControlsProps) {
   return (
     <nav className="layer-controls" aria-label="Relationship layers">
+      <span className="layer-controls-label">Relationship</span>
       {relationshipLayers.map((layer) => (
         <button
           key={layer.id}

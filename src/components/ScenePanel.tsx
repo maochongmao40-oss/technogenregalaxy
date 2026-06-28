@@ -1,6 +1,7 @@
 import type { Dispatch } from 'react';
 import type { SceneNode } from '../data/sceneTypes';
 import type { GalaxyAction } from '../state/galaxyState';
+import { useDraggablePanel } from './useDraggablePanel';
 
 interface ScenePanelProps {
   node: SceneNode | undefined;
@@ -8,13 +9,17 @@ interface ScenePanelProps {
 }
 
 export function ScenePanel({ node, dispatch }: ScenePanelProps) {
+  const { panelStyle, startDrag } = useDraggablePanel();
+
   if (!node) return null;
 
   return (
-    <aside className="genre-panel scene-panel" aria-label={`${node.name} scene details`}>
-      <p className="panel-kicker">
-        {node.type} / {node.era} / {node.region}
-      </p>
+    <aside className="genre-panel scene-panel" aria-label={`${node.name} scene details`} style={panelStyle}>
+      <div className="panel-drag-handle" data-testid="scene-panel-drag-handle" onPointerDown={startDrag}>
+        <p className="panel-kicker">
+          {node.type} / {node.era} / {node.region}
+        </p>
+      </div>
       <h1>{node.name}</h1>
       <p className="summary">{node.summary}</p>
       <section>
@@ -36,7 +41,13 @@ export function ScenePanel({ node, dispatch }: ScenePanelProps) {
         <h2>Listen / Search</h2>
         <div className="playback-options" aria-label={`${node.name} platform links`}>
           {node.links.map((link) => (
-            <a key={link.provider} href={link.url} target="_blank" rel="noreferrer">
+            <a
+              key={link.provider}
+              className={`provider-link provider-link--${link.provider}`}
+              href={link.url}
+              target="_blank"
+              rel="noreferrer"
+            >
               {link.label.replace(' embed', '')}
               <small>platform</small>
             </a>

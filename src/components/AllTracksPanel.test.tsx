@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { AllTracksPanel } from './AllTracksPanel';
 
 describe('AllTracksPanel', () => {
-  it('opens the full track list with playback URLs and authorization labels', async () => {
+  it('opens the full track list with playback URLs and authorization labels', () => {
     const dispatch = vi.fn();
     const onToggle = vi.fn();
 
@@ -16,13 +15,15 @@ describe('AllTracksPanel', () => {
       'href',
       expect.stringContaining('spotify'),
     );
+    expect(screen.getAllByRole('link', { name: /spotify platform/i })[0]).toHaveClass('provider-link--spotify');
     expect(screen.getAllByRole('link', { name: /youtube platform/i })[0]).toHaveAttribute(
       'href',
       expect.stringContaining('youtube'),
     );
+    expect(screen.getAllByRole('link', { name: /youtube platform/i })[0]).toHaveClass('provider-link--youtube');
     expect(screen.queryByRole('link', { name: /internet archive/i })).not.toBeInTheDocument();
 
-    await userEvent.click(screen.getAllByRole('button', { name: 'Play' })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'Play' })[0]);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'startTrack' }));
   });
 

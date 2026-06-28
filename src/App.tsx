@@ -4,6 +4,7 @@ import { AudioPlayer } from './components/AudioPlayer';
 import { GenrePanel } from './components/GenrePanel';
 import { LayerControls } from './components/LayerControls';
 import { ModeControls } from './components/ModeControls';
+import { ProjectCredit } from './components/ProjectCredit';
 import { ScenePanel } from './components/ScenePanel';
 import { getGenreById } from './data/genreData';
 import { getSceneNodeById } from './data/sceneData';
@@ -14,6 +15,7 @@ import { galaxyReducer, initialGalaxyState } from './state/galaxyState';
 export default function App() {
   const [state, dispatch] = useReducer(galaxyReducer, initialGalaxyState);
   const [tracksOpen, setTracksOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const selectedGenre = state.viewMode === 'genre' && state.selectedGenreId ? getGenreById(state.selectedGenreId) : undefined;
   const selectedSceneNode = state.viewMode === 'scene' && state.selectedSceneNodeId ? getSceneNodeById(state.selectedSceneNodeId) : undefined;
 
@@ -21,6 +23,7 @@ export default function App() {
     <main className="app-shell">
       {state.viewMode === 'scene' ? <SceneGalaxy state={state} dispatch={dispatch} /> : <GenreGalaxy state={state} dispatch={dispatch} />}
       <ModeControls activeMode={state.viewMode} onChange={(viewMode) => dispatch({ type: 'selectViewMode', viewMode })} />
+      <ProjectCredit open={contactOpen} onToggle={() => setContactOpen((open) => !open)} />
       {state.viewMode === 'genre' ? (
         <LayerControls activeLayer={state.activeLayer} onChange={(layer) => dispatch({ type: 'selectLayer', layer })} />
       ) : null}
@@ -28,7 +31,10 @@ export default function App() {
         open={tracksOpen}
         onToggle={() => {
           setTracksOpen((open) => {
-            if (!open) dispatch({ type: 'clearSelectedGenre' });
+            if (!open) {
+              dispatch({ type: 'clearSelectedGenre' });
+              dispatch({ type: 'clearSelectedSceneNode' });
+            }
             return !open;
           });
         }}
