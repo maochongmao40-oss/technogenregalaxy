@@ -30,10 +30,9 @@ canvas {
   display: block;
 }
 
+.mode-controls,
 .layer-controls {
   position: absolute;
-  top: 24px;
-  left: 24px;
   display: flex;
   gap: 8px;
   padding: 6px;
@@ -42,6 +41,19 @@ canvas {
   backdrop-filter: blur(14px);
 }
 
+.mode-controls {
+  top: 24px;
+  left: 24px;
+  z-index: 4;
+}
+
+.layer-controls {
+  top: 76px;
+  left: 24px;
+  z-index: 3;
+}
+
+.mode-controls button,
 .layer-controls button,
 .related-list button,
 .audio-player button,
@@ -54,6 +66,7 @@ canvas {
   overflow-wrap: anywhere;
 }
 
+.mode-controls .is-active,
 .layer-controls .is-active {
   border-color: #38bdf8;
   color: #38bdf8;
@@ -71,6 +84,7 @@ canvas {
   background: rgba(3, 3, 7, 0.62);
   backdrop-filter: blur(14px);
   cursor: pointer;
+  z-index: 4;
 }
 
 .all-tracks-panel {
@@ -207,6 +221,10 @@ canvas {
   text-transform: uppercase;
 }
 
+.scene-panel h1 {
+  font-size: clamp(1.9rem, 3.8vw, 3.2rem);
+}
+
 .panel-kicker,
 .audio-player span,
 .track-button small {
@@ -231,6 +249,51 @@ canvas {
   padding: 6px 8px;
   border: 1px solid rgba(192, 132, 252, 0.24);
   color: #c084fc;
+}
+
+.scene-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.scene-chip-list span {
+  padding: 6px 8px;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  color: #93c5fd;
+}
+
+.scene-panel-clear {
+  width: 100%;
+  min-height: 38px;
+  margin-top: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f4f7fb;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+}
+
+.scene-node-label {
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.scene-node-label span {
+  display: block;
+  min-width: 72px;
+  padding: 3px 5px;
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  color: rgba(244, 247, 251, 0.82);
+  background: rgba(3, 3, 7, 0.54);
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.1;
+  white-space: normal;
+}
+
+.scene-node-label.is-active span {
+  border-color: rgba(56, 189, 248, 0.62);
+  color: #ffffff;
 }
 
 .track-list {
@@ -310,10 +373,20 @@ canvas {
 }
 
 @media (max-width: 720px) {
-  .layer-controls {
+  .mode-controls {
     right: 12px;
     left: 12px;
     top: 12px;
+  }
+
+  .mode-controls button {
+    flex: 1;
+  }
+
+  .layer-controls {
+    right: 12px;
+    left: 12px;
+    top: 64px;
   }
 
   .layer-controls button {
@@ -321,11 +394,11 @@ canvas {
   }
 
   .all-tracks-toggle {
-    top: 64px;
+    top: 116px;
   }
 
   .all-tracks-panel {
-    top: 116px;
+    top: 168px;
     width: calc(100vw - 24px);
     max-height: calc(100vh - 180px);
   }
