@@ -210,27 +210,6 @@ canvas {
   color: #ffffff;
 }
 
-.project-contact-card a.contact-capsule {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  color: #93c5fd;
-  text-decoration: none;
-}
-
-.project-contact-card a.contact-capsule-project {
-  width: min(100%, 326px);
-  padding: 12px 14px;
-  border-radius: 20px;
-  line-height: 1.32;
-}
-
-.project-contact-card a span {
-  color: rgba(244, 247, 251, 0.58);
-  font-size: 0.78rem;
-  overflow-wrap: anywhere;
-}
-
 .identity-dot {
   display: inline-block;
   width: 8px;

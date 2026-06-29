@@ -36,7 +36,7 @@ export function GenrePanel({ genre, dispatch }: GenrePanelProps) {
         ))}
       </ul>
       <section>
-        <h2>Signals</h2>
+        <h2>Tracks</h2>
         <div className="track-list">
           {tracks.map((track) => {
             const playable = track.playbackStatus === 'ready';

@@ -11,6 +11,8 @@ describe('AllTracksPanel', () => {
 
     expect(screen.getByRole('complementary', { name: 'All tracks' })).toBeInTheDocument();
     expect(screen.getByText('Strings of Life')).toBeInTheDocument();
+    expect(screen.getByText('No UFOs')).toBeInTheDocument();
+    expect(screen.getByText('Clear')).toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /spotify platform/i })[0]).toHaveAttribute(
       'href',
       expect.stringContaining('spotify'),
@@ -23,8 +25,10 @@ describe('AllTracksPanel', () => {
     expect(screen.getAllByRole('link', { name: /youtube platform/i })[0]).toHaveClass('provider-link--youtube');
     expect(screen.queryByRole('link', { name: /internet archive/i })).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getAllByRole('button', { name: 'Play' })[0]);
-    expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'startTrack' }));
+    expect(screen.queryByText(/signal/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/reserved/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Play' })).not.toBeInTheDocument();
+    expect(dispatch).not.toHaveBeenCalled();
   });
 
   it('renders only the top button when closed', () => {

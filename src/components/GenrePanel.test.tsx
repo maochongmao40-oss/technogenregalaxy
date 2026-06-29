@@ -10,6 +10,8 @@ describe('GenrePanel', () => {
 
     expect(screen.getByRole('heading', { name: 'Detroit Techno' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /classic strings of life/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /play no ufos/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /play clear/i })).toBeDisabled();
     expect(screen.getAllByRole('link', { name: /spotify platform/i })[0]).toHaveAttribute(
       'href',
       expect.stringContaining('spotify'),
@@ -22,9 +24,8 @@ describe('GenrePanel', () => {
     expect(screen.getAllByRole('link', { name: /youtube platform/i })[0]).toHaveClass('provider-link--youtube');
     expect(screen.queryByText(/free audio/i)).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getAllByRole('button', { name: /play detroit techno signal/i })[0]);
-    expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'startTrack' }));
-    expect(screen.getByRole('button', { name: /reserved/i })).toBeDisabled();
+    expect(screen.queryByRole('button', { name: /signal/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /reserved/i })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getAllByRole('button', { name: /jump to/i })[0]);
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: 'selectGenre' }));

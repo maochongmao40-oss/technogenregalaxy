@@ -55,11 +55,6 @@ describe('App', () => {
     expect(screen.getByText('UnknownCrystal')).toHaveClass('contact-capsule-name');
     expect(screen.getByText('Shanghai,CN')).toHaveClass('contact-capsule');
     expect(screen.getByText('email:maoson888@outlook.com')).toHaveClass('contact-capsule');
-    expect(screen.getByRole('link', { name: /Explore more of my projects/i })).toHaveAttribute(
-      'href',
-      'https://maochongmao40-oss.github.io/unknowncrystalpersonalportfolio/',
-    );
-    expect(screen.getByRole('link', { name: /Explore more of my projects/i })).toHaveClass('contact-capsule');
-    expect(screen.getByRole('link', { name: /Explore more of my projects/i })).toHaveClass('contact-capsule-project');
+    expect(screen.queryByRole('link', { name: /Explore more of my projects/i })).not.toBeInTheDocument();
   });
 });

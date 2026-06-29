@@ -628,45 +628,141 @@ const canonicalTracksByGenre: Record<GenreId, CanonicalTrackSeed> = {
   },
 };
 
+const additionalTracksByGenre: Record<GenreId, [CanonicalTrackSeed, CanonicalTrackSeed]> = {
+  'detroit-techno': [
+    { title: 'No UFOs', artist: 'Model 500', year: 1985, note: 'Foundational Juan Atkins record for Detroit machine funk and early techno language.' },
+    { title: 'Clear', artist: 'Cybotron', year: 1983, note: 'Electro-techno bridge that shaped Detroit futurism before techno was fully named.' },
+  ],
+  'minimal-techno': [
+    { title: 'Spastik', artist: 'Plastikman', year: 1993, note: 'Minimal percussion study that turns reduction into a hypnotic club weapon.' },
+    { title: 'Minus Orange', artist: 'Richie Hawtin', year: 1999, note: 'A precise late-1990s minimal reference for lean pressure and microscopic control.' },
+  ],
+  'dub-techno': [
+    { title: 'Phylyps Trak', artist: 'Basic Channel', year: 1993, note: 'A Basic Channel cornerstone for echo, chords, and submerged Berlin techno architecture.' },
+    { title: 'Quadrant Dub', artist: 'Basic Channel', year: 1994, note: 'A deep dub techno reference where rhythm and delay become one pressure field.' },
+  ],
+  'acid-techno': [
+    { title: 'London Acid City', artist: 'Lochi', year: 1996, note: 'A squat-party acid techno anthem with raw 303 drive and London free-party bite.' },
+    { title: 'One Night in Hackney', artist: 'Dynamo City', year: 2001, note: 'A cult acid techno narrative record tied to the London acid techno circuit.' },
+  ],
+  'hard-techno': [
+    { title: 'La Real', artist: 'Chris Liebing', year: 1999, note: 'Hard techno reference for compressed drive, impact, and late-1990s European pressure.' },
+    { title: 'Energy Flash', artist: 'Joey Beltram', year: 1990, note: 'A hard-edged rave-techno classic whose riff and weight fed harder techno forms.' },
+  ],
+  'industrial-techno': [
+    { title: 'Atol', artist: 'Regis', year: 1996, note: 'Austere industrial techno pressure from the Downwards/Birmingham axis.' },
+    { title: 'Blood Witness', artist: 'Ancient Methods', year: 2008, note: 'A modern industrial techno reference for martial rhythm and metallic abrasion.' },
+  ],
+  schranz: [
+    { title: 'Stigmata 10/10', artist: 'Chris Liebing', year: 2000, note: 'A compressed German hard-techno reference adjacent to the schranz vocabulary.' },
+    { title: 'Get On Up', artist: 'DJ Rush', year: 1998, note: 'A raw, driving hard techno record associated with the harder looped club lineage.' },
+  ],
+  'melodic-techno': [
+    { title: 'Atlas', artist: 'Tale Of Us', year: 2015, note: 'A modern melodic techno reference for widescreen synth drama and festival-scale tension.' },
+    { title: 'Domino', artist: 'Oxia', year: 2006, note: 'A melodic techno/minimal crossover classic with a durable arpeggiated hook.' },
+  ],
+  'ambient-techno': [
+    { title: 'Smokebelch II', artist: 'The Sabres of Paradise', year: 1993, note: 'A downtempo ambient-techno classic where club pulse dissolves into atmosphere.' },
+    { title: 'Vletrmx', artist: 'Autechre', year: 1995, note: 'A soft-focus electronic reference for listening techno ambience and suspended rhythm.' },
+  ],
+  electro: [
+    { title: 'Al-Naafiysh (The Soul)', artist: 'Hashim', year: 1983, note: 'A foundational electro record for drum-machine syncopation and robotic funk.' },
+    { title: 'Numbers', artist: 'Kraftwerk', year: 1981, note: 'A crucial electronic rhythm template feeding electro, hip-hop, and techno futures.' },
+  ],
+  'chicago-house': [
+    { title: 'Move Your Body', artist: 'Marshall Jefferson', year: 1986, note: 'The house music anthem that defined Chicago piano energy and warehouse release.' },
+    { title: 'No Way Back', artist: 'Adonis', year: 1986, note: 'Raw Chicago house minimalism with a bassline and vocal hook built for warehouse pressure.' },
+  ],
+  'acid-house': [
+    { title: 'Voodoo Ray', artist: 'A Guy Called Gerald', year: 1988, note: 'UK acid house classic that carried 303 psychedelia into rave culture.' },
+    { title: 'Acid Over', artist: 'Tyree', year: 1987, note: 'Chicago acid house reference for stripped drum-machine swing and TB-303 motion.' },
+  ],
+  'deep-house': [
+    { title: 'Mystery of Love', artist: 'Fingers Inc.', year: 1986, note: 'Deep house foundation for soulful mood, machine groove, and late-night warmth.' },
+    { title: 'Promised Land', artist: 'Joe Smooth', year: 1987, note: 'A classic deep house record joining gospel uplift with Chicago club structure.' },
+  ],
+  ebm: [
+    { title: 'Join in the Chant', artist: 'Nitzer Ebb', year: 1987, note: 'A central EBM body-music chant with sequenced force and industrial discipline.' },
+    { title: 'Let Your Body Learn', artist: 'Nitzer Ebb', year: 1987, note: 'EBM classic for command vocals, rigid rhythm, and physical club energy.' },
+  ],
+  'new-beat': [
+    { title: 'The Sound of C', artist: "The Confetti's", year: 1988, note: 'Belgian new beat hit for slowed-down club swing and playful machine rhythm.' },
+    { title: 'I Sit on Acid', artist: 'Lords of Acid', year: 1988, note: 'Belgian acid/new beat reference with slow, provocative electronic club pressure.' },
+  ],
+  trance: [
+    { title: 'The Age of Love', artist: 'Age of Love', year: 1990, note: 'Early trance blueprint for euphoric repetition and long-form melodic lift.' },
+    { title: 'For An Angel', artist: 'Paul van Dyk', year: 1994, note: 'A trance classic for bright melody, emotional lift, and club-scale release.' },
+  ],
+  'goa-trance': [
+    { title: 'Mahadeva', artist: 'Astral Projection', year: 1995, note: 'Goa trance reference for psychedelic leads and high-energy outdoor propulsion.' },
+    { title: 'LSD', artist: 'Hallucinogen', year: 1995, note: 'Psychedelic Goa classic for twisting synthesis and hallucinatory arrangement.' },
+  ],
+  'breakbeat-hardcore': [
+    { title: 'Trip II the Moon', artist: 'Acen', year: 1992, note: 'Breakbeat hardcore classic for chopped breaks, rave stabs, and cinematic sampling.' },
+    { title: 'Out of Space', artist: 'The Prodigy', year: 1992, note: 'UK rave anthem connecting breakbeat hardcore energy to mainstream club memory.' },
+  ],
+  jungle: [
+    { title: 'Original Nuttah', artist: 'Shy FX & UK Apachi', year: 1994, note: 'Jungle anthem for ragga vocal energy, chopped breaks, and bass pressure.' },
+    { title: 'Valley of the Shadows', artist: 'Origin Unknown', year: 1993, note: 'Dark jungle classic for break architecture and atmosphere-heavy bass movement.' },
+  ],
+  idm: [
+    { title: 'Xtal', artist: 'Aphex Twin', year: 1992, note: 'IDM/ambient techno reference for fragile melody, texture, and listening-room rhythm.' },
+    { title: 'Roygbiv', artist: 'Boards of Canada', year: 1998, note: 'IDM classic for nostalgic synthesis, compact structure, and home-listening warmth.' },
+  ],
+  ambient: [
+    { title: 'An Ending (Ascent)', artist: 'Brian Eno', year: 1983, note: 'A defining ambient piece for suspended harmony and environmental listening.' },
+    { title: '#3', artist: 'Aphex Twin', year: 1994, note: 'Ambient classic for emotional stillness, soft texture, and minimal melodic drift.' },
+  ],
+  'berlin-school': [
+    { title: 'Rubycon', artist: 'Tangerine Dream', year: 1975, note: 'Berlin School landmark for sequenced expansion and long-form electronic motion.' },
+    { title: 'E2-E4', artist: 'Manuel Gottsching', year: 1984, note: 'A hypnotic sequencer classic bridging Berlin electronics, minimalism, and dance music.' },
+  ],
+  'uk-garage': [
+    { title: 'RipGroove', artist: 'Double 99', year: 1997, note: 'UK garage/bassline classic for swung drums, pressure bass, and club immediacy.' },
+    { title: 'Gabriel', artist: 'Roy Davis Jr. feat. Peven Everett', year: 1996, note: 'A soulful garage classic central to UK garage vocal and swing identity.' },
+  ],
+  breaks: [
+    { title: 'B-Boy Stance', artist: 'Freestylers', year: 1998, note: 'Big beat/breaks reference for hip-hop breaks and late-1990s club punch.' },
+    { title: 'Block Rockin Beats', artist: 'The Chemical Brothers', year: 1997, note: 'Breakbeat-driven classic for heavy drums, hooks, and crossover club force.' },
+  ],
+  microhouse: [
+    { title: 'Easy Lee', artist: 'Ricardo Villalobos', year: 2003, note: 'Microhouse landmark for tiny rhythmic details, vocal fragments, and elastic minimal funk.' },
+    { title: 'Dexter', artist: 'Ricardo Villalobos', year: 2003, note: 'A microhouse/minimal classic where small edits and groove details carry the track.' },
+  ],
+  rominimal: [
+    { title: 'Sakadat', artist: 'Petre Inspirescu', year: 2009, note: 'Romanian minimal reference for spacious phrasing and deep understated groove.' },
+    { title: 'Fizheuer Zieheuer', artist: 'Ricardo Villalobos', year: 2006, note: 'Long-form minimal reference strongly tied to the extended Romanian minimal sensibility.' },
+  ],
+  'hypnotic-techno': [
+    { title: 'S.T.', artist: 'Voices From The Lake', year: 2012, note: 'Hypnotic techno reference for deep looping immersion and aquatic pressure.' },
+    { title: 'Lustrations', artist: 'Mike Parker', year: 2013, note: 'Hypnotic techno classic for tunneling synth motion and precise low-end repetition.' },
+  ],
+  'peak-time-techno': [
+    { title: 'Space Date', artist: 'Adam Beyer, Layton Giordani & Green Velvet', year: 2018, note: 'Modern peak-time reference for vocal hooks, polished impact, and big-room drive.' },
+    { title: 'Teach Me', artist: 'Adam Beyer', year: 2014, note: 'Peak-time techno reference for rolling tension and streamlined festival-room force.' },
+  ],
+  hardgroove: [
+    { title: 'Remanipulated', artist: 'Ben Sims', year: 2004, note: 'Hardgroove reference for looped funk, percussion pressure, and techno propulsion.' },
+    { title: 'Lanicor', artist: 'Umek', year: 2000, note: 'Percussive techno classic connected to the rolling hardgroove era.' },
+  ],
+  'birmingham-techno': [
+    { title: 'Badger Bite', artist: 'Surgeon', year: 1995, note: 'Birmingham techno reference for hard-edged loops and austere machine pressure.' },
+    { title: 'Speak to Me', artist: 'Regis', year: 1996, note: 'Downwards/Birmingham reference for stripped industrial techno severity.' },
+  ],
+  ghettotech: [
+    { title: 'Sex on the Beach', artist: 'DJ Assault', year: 1997, note: 'Ghettotech classic for raw Detroit electro-bass, speed, and direct club chants.' },
+    { title: 'Shake It Baby', artist: 'DJ Godfather', year: 1999, note: 'Detroit ghettotech reference for fast drums, callouts, and street-level machine funk.' },
+  ],
+  'future-garage': [
+    { title: 'Night Air', artist: 'Jamie Woon', year: 2010, note: 'Future garage-adjacent classic for shadowed swing, space, and vocal atmosphere.' },
+    { title: 'Hyph Mngo', artist: 'Joy Orbison', year: 2009, note: 'Post-garage/future-garage touchstone for emotional chords and broken UK swing.' },
+  ],
+};
+
 export const tracks: Track[] = genres
-  .flatMap((genre, index) => [
+  .flatMap((genre) => [
     canonicalTrackFor(genre.id),
-    {
-      id: `${genre.id}-pulse-a`,
-      title: `${genre.name} Signal A`,
-      artist: 'Prototype Archive',
-      year: 1990 + (index % 25),
-      duration: '0:30',
-      genreId: genre.id,
-      audioSrc: `/audio/placeholder-${(index % 3) + 1}.mp3`,
-      sourceKind: 'placeholder' as const,
-      playbackStatus: 'ready' as const,
-      note: `Placeholder loop for testing the ${genre.name} playback state.`,
-    },
-    {
-      id: `${genre.id}-pulse-b`,
-      title: `${genre.name} Signal B`,
-      artist: 'Prototype Archive',
-      year: 1992 + (index % 25),
-      duration: '0:30',
-      genreId: genre.id,
-      audioSrc: `/audio/placeholder-${((index + 1) % 3) + 1}.mp3`,
-      sourceKind: 'placeholder' as const,
-      playbackStatus: 'ready' as const,
-      note: `Second placeholder loop for testing ${genre.name} track switching.`,
-    },
-    {
-      id: `${genre.id}-reference-slot`,
-      title: `${genre.name} Reference Slot`,
-      artist: 'Reserved Audio Source',
-      year: 2026,
-      duration: 'TBD',
-      genreId: genre.id,
-      audioSrc: `/audio/future/${genre.id}.mp3`,
-      sourceKind: 'local-file' as const,
-      playbackStatus: 'reserved' as const,
-      note: `Reserved slot for a licensed or locally supplied ${genre.name} reference track.`,
-    },
+    ...additionalTracksByGenre[genre.id].map((seed, index) => referenceTrackFor(genre.id, seed, index + 2)),
   ])
   .map((track) => ({ ...track, playbackOptions: playbackOptionsFor(track) }));
 
@@ -684,6 +780,21 @@ function canonicalTrackFor(genreId: GenreId): Track {
     sourceKind: 'curated-reference',
     playbackStatus: 'metadata-only',
     canonical: true,
+    note: seed.note,
+  };
+}
+
+function referenceTrackFor(genreId: GenreId, seed: CanonicalTrackSeed, position: number): Track {
+  return {
+    id: `${genreId}-reference-${position}`,
+    title: seed.title,
+    artist: seed.artist,
+    year: seed.year,
+    duration: 'Platform search',
+    genreId,
+    audioSrc: '',
+    sourceKind: 'curated-reference',
+    playbackStatus: 'metadata-only',
     note: seed.note,
   };
 }

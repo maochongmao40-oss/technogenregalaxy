@@ -23,15 +23,6 @@ export function ProjectCredit({ open, onToggle }: ProjectCreditProps) {
             <span aria-hidden="true">✉️</span>
             email:maoson888@outlook.com
           </p>
-          <a
-            className="contact-capsule contact-capsule-project"
-            href="https://maochongmao40-oss.github.io/unknowncrystalpersonalportfolio/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Explore more of my projects:
-            <span>maochongmao40-oss.github.io/unknowncrystalpersonalportfolio</span>
-          </a>
         </aside>
       ) : null}
     </>

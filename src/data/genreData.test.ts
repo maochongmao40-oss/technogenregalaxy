@@ -38,9 +38,12 @@ describe('genre dataset', () => {
     }
   });
 
-  it('has at least two tracks per genre', () => {
+  it('has exactly three real reference tracks per genre', () => {
     for (const genre of genres) {
-      expect(getTracksForGenre(genre.id).length).toBeGreaterThanOrEqual(2);
+      const genreTracks = getTracksForGenre(genre.id);
+      expect(genreTracks).toHaveLength(3);
+      expect(genreTracks.every((track) => track.sourceKind === 'curated-reference')).toBe(true);
+      expect(genreTracks.every((track) => track.playbackStatus === 'metadata-only')).toBe(true);
     }
   });
 
@@ -56,7 +59,7 @@ describe('genre dataset', () => {
     }
   });
 
-  it('provides a canonical real-track candidate for each genre', () => {
+  it('provides one canonical real-track candidate for each genre', () => {
     for (const genre of genres) {
       const canonical = getTracksForGenre(genre.id).filter((track) => track.canonical);
       expect(canonical).toHaveLength(1);
@@ -98,21 +101,16 @@ describe('genre dataset', () => {
     }
     for (const track of tracks) {
       expect(genreIds.has(track.genreId)).toBe(true);
-      expect(['placeholder', 'local-file', 'external-url', 'curated-reference']).toContain(track.sourceKind);
-      expect(['ready', 'reserved', 'metadata-only']).toContain(track.playbackStatus);
-      if (track.playbackStatus === 'ready') {
-        expect(track.audioSrc).toMatch(/^\/audio\/placeholder-/);
-      }
+      expect(track.sourceKind).toBe('curated-reference');
+      expect(track.playbackStatus).toBe('metadata-only');
+      expect(track.audioSrc).toBe('');
     }
   });
 
-  it('reserves a future audio slot for each genre', () => {
-    for (const genre of genres) {
-      const reserved = getTracksForGenre(genre.id).filter((track) => track.playbackStatus === 'reserved');
-      expect(reserved).toHaveLength(1);
-      expect(reserved[0].sourceKind).toBe('local-file');
-      expect(reserved[0].audioSrc).toBe(`/audio/future/${genre.id}.mp3`);
-    }
+  it('removes prototype signals and future-reserved audio slots from the public track library', () => {
+    expect(tracks.some((track) => /signal|prototype archive|reserved audio source/i.test(`${track.title} ${track.artist}`))).toBe(false);
+    expect(tracks.some((track) => track.duration === '0:30' || track.duration === 'TBD')).toBe(false);
+    expect(tracks.some((track) => track.sourceKind === 'placeholder' || track.sourceKind === 'local-file')).toBe(false);
   });
 
   it('returns layer-specific relationships for a genre', () => {
